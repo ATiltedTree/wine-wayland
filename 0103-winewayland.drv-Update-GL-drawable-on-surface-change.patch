@@ -1,0 +1,101 @@
+From b053b58274d303ebb64d590a5e0f1265d7d9f8f0 Mon Sep 17 00:00:00 2001
+From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
+Date: Thu, 30 Sep 2021 11:23:00 +0300
+Subject: [PATCH 103/164] winewayland.drv: Update GL drawable on surface
+ changes.
+
+When the Wayland surface for a window changes, also update
+any associated GL drawable.
+
+Signed-off-by: Alexandros Frantzis <alexandros.frantzis@collabora.com>
+---
+ dlls/winewayland.drv/opengl.c     | 24 ++++++++++++++++++++++++
+ dlls/winewayland.drv/waylanddrv.h |  6 ++++++
+ dlls/winewayland.drv/window.c     |  7 ++++++-
+ 3 files changed, 36 insertions(+), 1 deletion(-)
+
+diff --git a/dlls/winewayland.drv/opengl.c b/dlls/winewayland.drv/opengl.c
+index d6fa30d594e..12a5476165b 100644
+--- a/dlls/winewayland.drv/opengl.c
++++ b/dlls/winewayland.drv/opengl.c
+@@ -1595,6 +1595,26 @@ struct opengl_funcs *WAYLAND_wine_get_wgl_driver(UINT version)
+     return &egl_funcs;
+ }
+ 
++/***********************************************************************
++ *		wayland_update_gl_drawable_surface
++ */
++void wayland_update_gl_drawable_surface(HWND hwnd, struct wayland_surface *wayland_surface)
++{
++    struct wayland_gl_drawable *gl;
++
++    if ((gl = wayland_gl_drawable_get(hwnd)))
++    {
++        if (gl->wayland_surface)
++            wayland_surface_unref_glvk(gl->wayland_surface);
++
++        gl->wayland_surface = wayland_surface;
++        if (gl->wayland_surface)
++            wayland_surface_create_or_ref_glvk(gl->wayland_surface);
++
++        wayland_gl_drawable_release(gl);
++    }
++}
++
+ #else /* No GL */
+ 
+ struct opengl_funcs *WAYLAND_wine_get_wgl_driver(UINT version)
+@@ -1603,4 +1623,8 @@ struct opengl_funcs *WAYLAND_wine_get_wgl_driver(UINT version)
+     return NULL;
+ }
+ 
++void wayland_update_gl_drawable_surface(HWND hwnd, struct wayland_surface *wayland_surface)
++{
++}
++
+ #endif
+diff --git a/dlls/winewayland.drv/waylanddrv.h b/dlls/winewayland.drv/waylanddrv.h
+index e1dca5f1ab3..b3e02ba3fe5 100644
+--- a/dlls/winewayland.drv/waylanddrv.h
++++ b/dlls/winewayland.drv/waylanddrv.h
+@@ -506,6 +506,12 @@ void wayland_set_cursor_if_current_invalid(HCURSOR hcursor) DECLSPEC_HIDDEN;
+ 
+ BOOL wayland_gbm_init(void) DECLSPEC_HIDDEN;
+ 
++/**********************************************************************
++ *          OpenGL support
++ */
++
++void wayland_update_gl_drawable_surface(HWND hwnd, struct wayland_surface *wayland_surface) DECLSPEC_HIDDEN;
++
+ /**********************************************************************
+  *          Registry helpers
+  */
+diff --git a/dlls/winewayland.drv/window.c b/dlls/winewayland.drv/window.c
+index a68adc8b909..84ddca2dc1b 100644
+--- a/dlls/winewayland.drv/window.c
++++ b/dlls/winewayland.drv/window.c
+@@ -553,7 +553,10 @@ static void wayland_win_data_update_wayland_surface(struct wayland_win_data *dat
+             wl_list_for_each(child, &data->wayland_surface->child_list, link)
+             {
+                 struct wayland_win_data *child_data;
+-                if ((child_data = wayland_win_data_get(child->hwnd)))
++                /* Don't handle glvk subsurfaces here, they are updated specially
++                 * below. */
++                if (child != data->wayland_surface->glvk &&
++                    (child_data = wayland_win_data_get(child->hwnd)))
+                 {
+                     child_data->wayland_surface_needs_update = TRUE;
+                     wayland_win_data_release(child_data);
+@@ -565,6 +568,8 @@ static void wayland_win_data_update_wayland_surface(struct wayland_win_data *dat
+         }
+ 
+         data->wayland_surface = surface;
++
++        wayland_update_gl_drawable_surface(data->hwnd, data->wayland_surface);
+     }
+ }
+ 
+-- 
+2.35.1
+

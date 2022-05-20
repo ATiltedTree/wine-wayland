@@ -1,0 +1,117 @@
+From d03faa45ce92e12c1acbde0cf01ae4ba4267f831 Mon Sep 17 00:00:00 2001
+From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
+Date: Wed, 23 Feb 2022 12:28:33 +0200
+Subject: [PATCH 016/164] winewayland.drv: Implement Wine monitor change
+ notification.
+
+Introduce a mechanism to synchronously notify all Wayland capable
+threads about changes in the current Wine monitor setup.
+
+Signed-off-by: Alexandros Frantzis <alexandros.frantzis@collabora.com>
+---
+ dlls/winewayland.drv/display.c    |  1 +
+ dlls/winewayland.drv/wayland.c    | 32 +++++++++++++++++++++++++++++++
+ dlls/winewayland.drv/waylanddrv.h |  2 ++
+ dlls/winewayland.drv/window.c     |  7 +++++++
+ 4 files changed, 42 insertions(+)
+
+diff --git a/dlls/winewayland.drv/display.c b/dlls/winewayland.drv/display.c
+index fca924dd7d2..c98856fe079 100644
+--- a/dlls/winewayland.drv/display.c
++++ b/dlls/winewayland.drv/display.c
+@@ -77,6 +77,7 @@ static void wayland_broadcast_wm_display_change(void)
+ void wayland_init_display_devices()
+ {
+     wayland_refresh_display_devices();
++    wayland_notify_wine_monitor_change();
+     wayland_broadcast_wm_display_change();
+ }
+ 
+diff --git a/dlls/winewayland.drv/wayland.c b/dlls/winewayland.drv/wayland.c
+index c10d8e56ec2..554687aa8ce 100644
+--- a/dlls/winewayland.drv/wayland.c
++++ b/dlls/winewayland.drv/wayland.c
+@@ -260,3 +260,35 @@ void wayland_process_release(void)
+ {
+     wayland_mutex_unlock(&process_wayland_mutex);
+ }
++
++/**********************************************************************
++ *          wayland_notify_wine_monitor_change
++ *
++ * Notify all wayland instances about a change in the state of wine monitors.
++ * The notification is synchronous, this function returns after all wayland
++ * instances have handled the event, except if it a thread is slow to process
++ * the message, and thus likely to be blocked by this synchronous operation.
++ */
++void wayland_notify_wine_monitor_change(void)
++{
++    struct wayland *w;
++
++    wayland_mutex_lock(&thread_wayland_mutex);
++
++    /* Each thread maintains its own output information, so we need to notify
++     * all threads about the change. We can't guarantee that all threads will
++     * have windows to which we could potentially send the notification message
++     * to, so we use the internal send function to target the threads directly.
++     * We can't use PostThreadMessage since we require synchronous message
++     * handling. */
++    wl_list_for_each(w, &thread_wayland_list, thread_link)
++    {
++        /* Use a timeout of 50ms to avoid blocking indefinitely if the
++         * target thread is not processing (and to avoid deadlocks). */
++        __wine_send_internal_message_timeout(w->process_id, w->thread_id,
++                                             WM_WAYLAND_MONITOR_CHANGE,
++                                             0, 0, 0, 50, NULL);
++    }
++
++    wayland_mutex_unlock(&thread_wayland_mutex);
++}
+diff --git a/dlls/winewayland.drv/waylanddrv.h b/dlls/winewayland.drv/waylanddrv.h
+index 6ad4545e9f6..fc3b9e5ebc1 100644
+--- a/dlls/winewayland.drv/waylanddrv.h
++++ b/dlls/winewayland.drv/waylanddrv.h
+@@ -50,6 +50,7 @@ extern struct wl_display *process_wl_display DECLSPEC_HIDDEN;
+ enum wayland_window_message
+ {
+     WM_WAYLAND_BROADCAST_DISPLAY_CHANGE = 0x80001000,
++    WM_WAYLAND_MONITOR_CHANGE,
+ };
+ 
+ /**********************************************************************
+@@ -162,6 +163,7 @@ void wayland_mutex_unlock(struct wayland_mutex *wayland_mutex) DECLSPEC_HIDDEN;
+ BOOL wayland_output_create(struct wayland *wayland, uint32_t id, uint32_t version) DECLSPEC_HIDDEN;
+ void wayland_output_destroy(struct wayland_output *output) DECLSPEC_HIDDEN;
+ void wayland_output_use_xdg_extension(struct wayland_output *output) DECLSPEC_HIDDEN;
++void wayland_notify_wine_monitor_change(void) DECLSPEC_HIDDEN;
+ 
+ /**********************************************************************
+  *          USER driver functions
+diff --git a/dlls/winewayland.drv/window.c b/dlls/winewayland.drv/window.c
+index 2f84b456670..20e78f068e0 100644
+--- a/dlls/winewayland.drv/window.c
++++ b/dlls/winewayland.drv/window.c
+@@ -48,6 +48,10 @@ BOOL WAYLAND_CreateWindow(HWND hwnd)
+     return TRUE;
+ }
+ 
++static void handle_wm_wayland_monitor_change(struct wayland *wayland)
++{
++}
++
+ /**********************************************************************
+  *           WAYLAND_WindowMessage
+  */
+@@ -61,6 +65,9 @@ LRESULT WAYLAND_WindowMessage(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp)
+         SendMessageTimeoutW(HWND_BROADCAST, WM_DISPLAYCHANGE, wp, lp,
+                             SMTO_ABORTIFHUNG, 2000, NULL);
+         break;
++    case WM_WAYLAND_MONITOR_CHANGE:
++        handle_wm_wayland_monitor_change(thread_wayland());
++        break;
+     default:
+         FIXME("got window msg %x hwnd %p wp %lx lp %lx\n", msg, hwnd, wp, lp);
+     }
+-- 
+2.35.1
+

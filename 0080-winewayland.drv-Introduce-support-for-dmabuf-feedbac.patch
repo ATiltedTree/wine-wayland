@@ -1,0 +1,179 @@
+From 60fa7aa2a6fc7447ecd4e93a5be59ca0064c74df Mon Sep 17 00:00:00 2001
+From: Leandro Ribeiro <leandro.ribeiro@collabora.com>
+Date: Fri, 29 Apr 2022 16:23:08 -0300
+Subject: [PATCH 080/164] winewayland.drv: Introduce support for dmabuf
+ feedback.
+
+This bumps dmabuf supported version up to 4, and binds to the dmabuf
+feedback interface.
+
+For now we only care about the main device from the default dmabuf
+feedback, but in the future we are going to use this to get optimal
+buffer allocation parameters.
+
+Signed-off-by: Leandro Ribeiro <leandro.ribeiro@collabora.com>
+---
+ dlls/winewayland.drv/wayland.c        |  8 ++-
+ dlls/winewayland.drv/wayland_dmabuf.c | 84 +++++++++++++++++++++++++++
+ dlls/winewayland.drv/waylanddrv.h     |  9 +++
+ 3 files changed, 99 insertions(+), 2 deletions(-)
+
+diff --git a/dlls/winewayland.drv/wayland.c b/dlls/winewayland.drv/wayland.c
+index acdd8334c9e..82ea88d4d6e 100644
+--- a/dlls/winewayland.drv/wayland.c
++++ b/dlls/winewayland.drv/wayland.c
+@@ -132,9 +132,13 @@ static void registry_handle_global(void *data, struct wl_registry *registry,
+     }
+     else if (strcmp(interface, "zwp_linux_dmabuf_v1") == 0)
+     {
++        uint32_t dmabuf_version = version < 4 ? version : 4;
++
+         wayland->zwp_linux_dmabuf_v1 =
+-            wl_registry_bind(registry, id, &zwp_linux_dmabuf_v1_interface,
+-                             version < 2 ? version : 2);
++            wl_registry_bind(registry, id, &zwp_linux_dmabuf_v1_interface, dmabuf_version);
++
++        if (dmabuf_version >= ZWP_LINUX_DMABUF_V1_GET_DEFAULT_FEEDBACK_SINCE_VERSION)
++            wayland_bind_default_dmabuf_feedback(wayland);
+     }
+ 
+     /* The per-process wayland instance should not handle every global, as there
+diff --git a/dlls/winewayland.drv/wayland_dmabuf.c b/dlls/winewayland.drv/wayland_dmabuf.c
+index 010f03f65ac..9f560fd3ef3 100644
+--- a/dlls/winewayland.drv/wayland_dmabuf.c
++++ b/dlls/winewayland.drv/wayland_dmabuf.c
+@@ -28,6 +28,90 @@
+ 
+ WINE_DEFAULT_DEBUG_CHANNEL(waylanddrv);
+ 
++/**********************************************************************
++ *          zwp_linux_dmabuf_feedback_v1 handling
++ */
++static void dmabuf_feedback_main_device(void *data,
++                                        struct zwp_linux_dmabuf_feedback_v1 *zwp_linux_dmabuf_feedback_v1,
++                                        struct wl_array *device)
++{
++    struct wayland *wayland = data;
++
++    if (device->size != sizeof(wayland->dmabuf_feedback.main_device))
++        return;
++
++    memcpy(&wayland->dmabuf_feedback.main_device, device->data, device->size);
++}
++
++static void dmabuf_feedback_format_table(void *data,
++                                         struct zwp_linux_dmabuf_feedback_v1 *zwp_linux_dmabuf_feedback_v1,
++                                         int32_t fd, uint32_t size)
++{
++    /* ignore for now */
++}
++
++static void dmabuf_feedback_tranche_target_device(void *data,
++                                                  struct zwp_linux_dmabuf_feedback_v1 *zwp_linux_dmabuf_feedback_v1,
++                                                  struct wl_array *device)
++{
++    /* ignore for now */
++}
++
++static void dmabuf_feedback_tranche_formats(void *data,
++                                            struct zwp_linux_dmabuf_feedback_v1 *zwp_linux_dmabuf_feedback_v1,
++                                            struct wl_array *indices)
++{
++    /* ignore for now */
++}
++
++static void dmabuf_feedback_tranche_flags(void *data,
++                                          struct zwp_linux_dmabuf_feedback_v1 *zwp_linux_dmabuf_feedback_v1,
++                                          uint32_t flags)
++{
++    /* ignore for now */
++}
++
++static void dmabuf_feedback_tranche_done(void *data,
++                                         struct zwp_linux_dmabuf_feedback_v1 *zwp_linux_dmabuf_feedback_v1)
++{
++    /* ignore for now */
++}
++
++static void dmabuf_feedback_done(void *data,
++                                 struct zwp_linux_dmabuf_feedback_v1 *zwp_linux_dmabuf_feedback_v1)
++{
++    struct wayland *wayland = data;
++    struct wayland_dmabuf_feedback *feedback = &wayland->dmabuf_feedback;
++
++    zwp_linux_dmabuf_feedback_v1_destroy(feedback->zwp_linux_dmabuf_feedback_v1);
++    feedback->zwp_linux_dmabuf_feedback_v1 = NULL;
++}
++
++static const struct zwp_linux_dmabuf_feedback_v1_listener dmabuf_feedback_listener =
++{
++    .main_device = dmabuf_feedback_main_device,
++    .format_table = dmabuf_feedback_format_table,
++    .tranche_target_device = dmabuf_feedback_tranche_target_device,
++    .tranche_formats = dmabuf_feedback_tranche_formats,
++    .tranche_flags = dmabuf_feedback_tranche_flags,
++    .tranche_done = dmabuf_feedback_tranche_done,
++    .done = dmabuf_feedback_done,
++};
++
++/**********************************************************************
++ *          bind to default zwp_linux_dmabuf_feedback_v1
++ */
++void wayland_bind_default_dmabuf_feedback(struct wayland *wayland)
++{
++    struct wayland_dmabuf_feedback *feedback = &wayland->dmabuf_feedback;
++
++    feedback->zwp_linux_dmabuf_feedback_v1 =
++        zwp_linux_dmabuf_v1_get_default_feedback(wayland->zwp_linux_dmabuf_v1);
++
++    zwp_linux_dmabuf_feedback_v1_add_listener(feedback->zwp_linux_dmabuf_feedback_v1,
++                                              &dmabuf_feedback_listener, wayland);
++}
++
+ /**********************************************************************
+  *          wayland_dmabuf_buffer_from_native
+  *
+diff --git a/dlls/winewayland.drv/waylanddrv.h b/dlls/winewayland.drv/waylanddrv.h
+index e20e8885160..64d09eb4fc2 100644
+--- a/dlls/winewayland.drv/waylanddrv.h
++++ b/dlls/winewayland.drv/waylanddrv.h
+@@ -26,6 +26,7 @@
+ #endif
+ 
+ #include <pthread.h>
++#include <sys/types.h>
+ #include <stdarg.h>
+ #include <wayland-client.h>
+ #include <wayland-cursor.h>
+@@ -131,6 +132,12 @@ struct wayland_pointer
+     HCURSOR hcursor;
+ };
+ 
++struct wayland_dmabuf_feedback
++{
++    struct zwp_linux_dmabuf_feedback_v1 *zwp_linux_dmabuf_feedback_v1;
++    dev_t main_device;
++};
++
+ struct wayland
+ {
+     struct wl_list thread_link;
+@@ -147,6 +154,7 @@ struct wayland
+     struct wl_seat *wl_seat;
+     struct wp_viewporter *wp_viewporter;
+     struct zwp_linux_dmabuf_v1 *zwp_linux_dmabuf_v1;
++    struct wayland_dmabuf_feedback dmabuf_feedback;
+     struct zxdg_output_manager_v1 *zxdg_output_manager_v1;
+     uint32_t next_fallback_output_id;
+     struct wl_list output_list;
+@@ -426,6 +434,7 @@ RGNDATA *wayland_shm_buffer_get_damage_clipped(struct wayland_shm_buffer *shm_bu
+  *          Wayland dmabuf buffer
+  */
+ 
++void wayland_bind_default_dmabuf_feedback(struct wayland *wayland);
+ struct wayland_dmabuf_buffer *wayland_dmabuf_buffer_create_from_native(struct wayland *wayland,
+                                                                        struct wayland_native_buffer *native) DECLSPEC_HIDDEN;
+ void wayland_dmabuf_buffer_destroy(struct wayland_dmabuf_buffer *dmabuf_buffer) DECLSPEC_HIDDEN;
+-- 
+2.35.1
+

@@ -1,0 +1,40 @@
+From 61781d16ba9658468c73e6b0a38fb8c8494229c0 Mon Sep 17 00:00:00 2001
+From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
+Date: Mon, 4 Oct 2021 17:04:04 +0300
+Subject: [PATCH 138/164] winewayland.drv: Invalidate Vulkan objects on Wayland
+ surface update.
+
+When the Wayland surface is updated (including when it changes to NULL,
+i.e., when it is destroyed), we need to notify the application so that
+it can deal with it accordingly.
+
+Signed-off-by: Alexandros Frantzis <alexandros.frantzis@collabora.com>
+---
+ dlls/winewayland.drv/window.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/dlls/winewayland.drv/window.c b/dlls/winewayland.drv/window.c
+index c306af91771..2c188576430 100644
+--- a/dlls/winewayland.drv/window.c
++++ b/dlls/winewayland.drv/window.c
+@@ -580,6 +580,9 @@ static void wayland_win_data_update_wayland_surface(struct wayland_win_data *dat
+         data->wayland_surface = surface;
+ 
+         wayland_update_gl_drawable_surface(data->hwnd, data->wayland_surface);
++        /* Force client to recreate any Vulkan objects so that we use the updated
++         * backing Wayland surface in our internal Vulkan representations. */
++        wayland_invalidate_vulkan_objects(data->hwnd);
+     }
+ }
+ 
+@@ -939,6 +942,7 @@ void WAYLAND_DestroyWindow(HWND hwnd)
+ 
+     if (!(data = wayland_win_data_get(hwnd))) return;
+     wayland_destroy_gl_drawable(hwnd);
++    wayland_invalidate_vulkan_objects(hwnd);
+     wayland_destroy_remote_surfaces(hwnd);
+     wayland_win_data_destroy(data);
+ }
+-- 
+2.35.1
+

@@ -1,0 +1,179 @@
+From 353d7e7b697ff5d3f5074c12bd535431e4c13f77 Mon Sep 17 00:00:00 2001
+From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
+Date: Mon, 13 Sep 2021 17:18:46 +0300
+Subject: [PATCH 074/164] winewayland.drv: Scale surfaces to apply Wine display
+ modes.
+
+Use the viewporter protocol to scale surfaces on the Wayland compositor
+side, in order to create the illusion that the monitor has performed a
+display mode change.
+
+Signed-off-by: Alexandros Frantzis <alexandros.frantzis@collabora.com>
+---
+ dlls/winewayland.drv/Makefile.in       |  1 +
+ dlls/winewayland.drv/wayland.c         |  7 ++++
+ dlls/winewayland.drv/wayland_surface.c | 45 ++++++++++++++++++++++++++
+ dlls/winewayland.drv/waylanddrv.h      |  5 +++
+ dlls/winewayland.drv/window.c          |  2 ++
+ 5 files changed, 60 insertions(+)
+
+diff --git a/dlls/winewayland.drv/Makefile.in b/dlls/winewayland.drv/Makefile.in
+index 72671d29ab3..aa413605163 100644
+--- a/dlls/winewayland.drv/Makefile.in
++++ b/dlls/winewayland.drv/Makefile.in
+@@ -33,6 +33,7 @@ C_SRCS = \
+ 	xkb_util.c \
+ 
+ WAYLAND_PROTOCOL_SRCS = \
++	$(WAYLAND_PROTOCOLS_DATADIR)/stable/viewporter/viewporter.xml \
+ 	$(WAYLAND_PROTOCOLS_DATADIR)/stable/xdg-shell/xdg-shell.xml \
+ 	$(WAYLAND_PROTOCOLS_DATADIR)/unstable/xdg-output/xdg-output-unstable-v1.xml \
+ 
+diff --git a/dlls/winewayland.drv/wayland.c b/dlls/winewayland.drv/wayland.c
+index 334237efed6..bf55347d54d 100644
+--- a/dlls/winewayland.drv/wayland.c
++++ b/dlls/winewayland.drv/wayland.c
+@@ -157,6 +157,10 @@ static void registry_handle_global(void *data, struct wl_registry *registry,
+                                             version < 5 ? version : 5);
+         wl_seat_add_listener(wayland->wl_seat, &seat_listener, wayland);
+     }
++    else if (strcmp(interface, "wp_viewporter") == 0)
++    {
++        wayland->wp_viewporter = wl_registry_bind(registry, id, &wp_viewporter_interface, 1);
++    }
+ }
+ 
+ static void registry_handle_global_remove(void *data, struct wl_registry *registry,
+@@ -321,6 +325,9 @@ void wayland_deinit(struct wayland *wayland)
+     if (wayland->wl_seat)
+         wl_seat_destroy(wayland->wl_seat);
+ 
++    if (wayland->wp_viewporter)
++        wp_viewporter_destroy(wayland->wp_viewporter);
++
+     if (wayland->wl_shm)
+         wl_shm_destroy(wayland->wl_shm);
+ 
+diff --git a/dlls/winewayland.drv/wayland_surface.c b/dlls/winewayland.drv/wayland_surface.c
+index 94b451c2826..41074114ef1 100644
+--- a/dlls/winewayland.drv/wayland_surface.c
++++ b/dlls/winewayland.drv/wayland_surface.c
+@@ -223,6 +223,13 @@ struct wayland_surface *wayland_surface_create_plain(struct wayland *wayland)
+     if (!surface->wl_surface)
+         goto err;
+ 
++    if (surface->wayland->wp_viewporter)
++    {
++        surface->wp_viewport =
++            wp_viewporter_get_viewport(surface->wayland->wp_viewporter,
++                                       surface->wl_surface);
++    }
++
+     wl_list_init(&surface->output_ref_list);
+     wl_list_init(&surface->link);
+     wl_list_init(&surface->child_list);
+@@ -472,6 +479,38 @@ void wayland_surface_reconfigure_geometry(struct wayland_surface *surface,
+     }
+ }
+ 
++/**********************************************************************
++ *          wayland_surface_reconfigure_size
++ *
++ * Configures the size of a wayland surface.
++ *
++ * The sizes should be given in wine's coordinate space.
++ *
++ * This function sets up but doesn't actually apply any new configuration.
++ * The wayland_surface_reconfigure_apply() needs to be called for changes
++ * to take effect.
++ */
++void wayland_surface_reconfigure_size(struct wayland_surface *surface,
++                                      int wine_width, int wine_height)
++{
++    int width, height;
++
++    wayland_surface_coords_rounded_from_wine(surface, wine_width, wine_height,
++                                             &width, &height);
++
++    TRACE("surface=%p hwnd=%p wine=%dx%d wayland=%dx%d\n",
++          surface, surface->hwnd, wine_width, wine_height, width, height);
++
++    /* Use a viewport, if supported, to handle display mode changes. */
++    if (surface->wp_viewport)
++    {
++        if (width != 0 && height != 0)
++            wp_viewport_set_destination(surface->wp_viewport, width, height);
++        else
++            wp_viewport_set_destination(surface->wp_viewport, -1, -1);
++    }
++}
++
+ /**********************************************************************
+  *          wayland_surface_reconfigure_apply
+  *
+@@ -651,6 +690,12 @@ void wayland_surface_destroy(struct wayland_surface *surface)
+         free(ref);
+     }
+ 
++    if (surface->wp_viewport)
++    {
++        wp_viewport_destroy(surface->wp_viewport);
++        surface->wp_viewport = NULL;
++    }
++
+     if (surface->xdg_toplevel)
+     {
+         xdg_toplevel_destroy(surface->xdg_toplevel);
+diff --git a/dlls/winewayland.drv/waylanddrv.h b/dlls/winewayland.drv/waylanddrv.h
+index ff9e4b939a2..89fb523c2ce 100644
+--- a/dlls/winewayland.drv/waylanddrv.h
++++ b/dlls/winewayland.drv/waylanddrv.h
+@@ -31,6 +31,7 @@
+ #include <wayland-cursor.h>
+ #include <xkbcommon/xkbcommon.h>
+ #include <xkbcommon/xkbcommon-compose.h>
++#include "viewporter-client-protocol.h"
+ #include "xdg-output-unstable-v1-client-protocol.h"
+ #include "xdg-shell-client-protocol.h"
+ 
+@@ -143,6 +144,7 @@ struct wayland
+     struct xdg_wm_base *xdg_wm_base;
+     struct wl_shm *wl_shm;
+     struct wl_seat *wl_seat;
++    struct wp_viewporter *wp_viewporter;
+     struct zxdg_output_manager_v1 *zxdg_output_manager_v1;
+     uint32_t next_fallback_output_id;
+     struct wl_list output_list;
+@@ -210,6 +212,7 @@ struct wayland_surface
+     struct wl_subsurface *wl_subsurface;
+     struct xdg_surface *xdg_surface;
+     struct xdg_toplevel *xdg_toplevel;
++    struct wp_viewport *wp_viewport;
+     struct wayland_surface *parent;
+     HWND hwnd;
+     struct wayland_mutex mutex;
+@@ -349,6 +352,8 @@ void wayland_surface_reconfigure_position(struct wayland_surface *surface,
+                                           int x, int y) DECLSPEC_HIDDEN;
+ void wayland_surface_reconfigure_geometry(struct wayland_surface *surface,
+                                           int x, int y, int width, int height) DECLSPEC_HIDDEN;
++void wayland_surface_reconfigure_size(struct wayland_surface *surface,
++                                      int width, int height) DECLSPEC_HIDDEN;
+ void wayland_surface_reconfigure_apply(struct wayland_surface *surface) DECLSPEC_HIDDEN;
+ void wayland_surface_unmap(struct wayland_surface *surface) DECLSPEC_HIDDEN;
+ void wayland_surface_ack_pending_configure(struct wayland_surface *surface) DECLSPEC_HIDDEN;
+diff --git a/dlls/winewayland.drv/window.c b/dlls/winewayland.drv/window.c
+index a3d04e5b5ea..e4696c2f86b 100644
+--- a/dlls/winewayland.drv/window.c
++++ b/dlls/winewayland.drv/window.c
+@@ -821,6 +821,8 @@ static void wayland_win_data_update_wayland_surface_state(struct wayland_win_dat
+         return;
+     }
+ 
++    wayland_surface_reconfigure_size(wsurface, width, height);
++
+     if (wsurface->wl_subsurface)
+     {
+         /* In addition to children windows, we manage some top level, popup window
+-- 
+2.35.1
+

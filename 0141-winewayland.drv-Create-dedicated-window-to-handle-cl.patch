@@ -1,0 +1,160 @@
+From d41dd86a1d33da3f75274eb0f20d9ff527f6a818 Mon Sep 17 00:00:00 2001
+From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
+Date: Wed, 22 Sep 2021 12:35:18 +0300
+Subject: [PATCH 141/164] winewayland.drv: Create dedicated window to handle
+ clipboard messages.
+
+Signed-off-by: Alexandros Frantzis <alexandros.frantzis@collabora.com>
+---
+ dlls/winewayland.drv/wayland_data_device.c | 58 ++++++++++++++++++++++
+ dlls/winewayland.drv/waylanddrv.h          |  3 ++
+ dlls/winewayland.drv/waylanddrv_main.c     | 10 ++++
+ dlls/winewayland.drv/window.c              |  3 ++
+ 4 files changed, 74 insertions(+)
+
+diff --git a/dlls/winewayland.drv/wayland_data_device.c b/dlls/winewayland.drv/wayland_data_device.c
+index 65e99051b0e..6142757ca29 100644
+--- a/dlls/winewayland.drv/wayland_data_device.c
++++ b/dlls/winewayland.drv/wayland_data_device.c
+@@ -24,6 +24,8 @@
+ 
+ #include "wine/debug.h"
+ 
++#include "winuser.h"
++
+ #include <assert.h>
+ #include <stdlib.h>
+ 
+@@ -254,3 +256,59 @@ void wayland_data_device_deinit(struct wayland_data_device *data_device)
+ 
+     memset(data_device, 0, sizeof(*data_device));
+ }
++
++/**********************************************************************
++ *          clipboard window handling
++ */
++
++static LRESULT CALLBACK clipboard_wndproc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp)
++{
++    switch (msg)
++    {
++    case WM_NCCREATE:
++        return TRUE;
++    }
++    return DefWindowProcW( hwnd, msg, wp, lp );
++}
++
++static HWND wayland_data_device_create_clipboard_window(void)
++{
++    static const WCHAR clipboard_classname[] = {
++        '_','_','w','i','n','e','_','c','l','i','p','b','o','a','r','d',
++        '_','m','a','n','a','g','e','r',0
++    };
++    WNDCLASSW class;
++    HWND clipboard_hwnd;
++
++    memset(&class, 0, sizeof(class));
++    class.lpfnWndProc = clipboard_wndproc;
++    class.lpszClassName = clipboard_classname;
++
++    if (!RegisterClassW(&class) && GetLastError() != ERROR_CLASS_ALREADY_EXISTS)
++    {
++        ERR("could not register clipboard window class err %u\n", GetLastError());
++        return 0;
++    }
++
++    if (!(clipboard_hwnd = CreateWindowW(clipboard_classname, NULL, 0, 0, 0, 0, 0,
++                                         HWND_MESSAGE, 0, 0, NULL)))
++    {
++        ERR("failed to create clipboard window err %u\n", GetLastError());
++        return 0;
++    }
++
++    TRACE("clipboard_hwnd=%p\n", clipboard_hwnd);
++    return clipboard_hwnd;
++}
++
++/**********************************************************************
++ *          wayland_data_device_ensure_clipboard_window
++ *
++ * Creates (if not already created) the window which handles clipboard
++ * messages for the specified wayland instance.
++ */
++void wayland_data_device_ensure_clipboard_window(struct wayland *wayland)
++{
++    if (!wayland->clipboard_hwnd)
++        wayland->clipboard_hwnd = wayland_data_device_create_clipboard_window();
++}
+diff --git a/dlls/winewayland.drv/waylanddrv.h b/dlls/winewayland.drv/waylanddrv.h
+index d270a855065..9a1dddbecc7 100644
+--- a/dlls/winewayland.drv/waylanddrv.h
++++ b/dlls/winewayland.drv/waylanddrv.h
+@@ -73,6 +73,7 @@ enum wayland_window_message
+     WM_WAYLAND_WINDOW_SURFACE_FLUSH,
+     WM_WAYLAND_REMOTE_SURFACE,
+     WM_WAYLAND_POINTER_CONFINEMENT_UPDATE,
++    WM_WAYLAND_CLIPBOARD_WINDOW_CREATE,
+ };
+ 
+ enum wayland_surface_role
+@@ -213,6 +214,7 @@ struct wayland
+     uint32_t last_button_serial;
+     DWORD last_event_type;
+     int event_notification_pipe[2];
++    HWND clipboard_hwnd;
+     RECT cursor_clip;
+ };
+ 
+@@ -590,6 +592,7 @@ void wayland_invalidate_vulkan_objects(HWND hwnd) DECLSPEC_HIDDEN;
+ void wayland_data_device_init(struct wayland_data_device *data_device,
+                               struct wayland *wayland) DECLSPEC_HIDDEN;
+ void wayland_data_device_deinit(struct wayland_data_device *data_device) DECLSPEC_HIDDEN;
++void wayland_data_device_ensure_clipboard_window(struct wayland *wayland) DECLSPEC_HIDDEN;
+ 
+ /**********************************************************************
+  *          Registry helpers
+diff --git a/dlls/winewayland.drv/waylanddrv_main.c b/dlls/winewayland.drv/waylanddrv_main.c
+index c19ecaa3887..2fa5deeffe9 100644
+--- a/dlls/winewayland.drv/waylanddrv_main.c
++++ b/dlls/winewayland.drv/waylanddrv_main.c
+@@ -27,6 +27,8 @@
+ #include "wine/debug.h"
+ #include "wine/server.h"
+ 
++#include "winuser.h"
++
+ #include <stdlib.h>
+ 
+ WINE_DEFAULT_DEBUG_CHANNEL(waylanddrv);
+@@ -97,6 +99,14 @@ struct wayland_thread_data *wayland_init_thread_data(void)
+     set_queue_fd(&data->wayland);
+     NtUserGetThreadInfo()->driver_data = data;
+ 
++    /* Create the clipboard window outside of thread init. We delay window
++     * creation since the thread init function may be invoked from within the
++     * context of a user32 function which holds the internal Wine user32 lock.
++     * In such a case creating the clipboard window would cause an internal
++     * user32 lock error. */
++    PostThreadMessageA(data->wayland.thread_id,
++                       WM_WAYLAND_CLIPBOARD_WINDOW_CREATE, 0, 0);
++
+     return data;
+ }
+ 
+diff --git a/dlls/winewayland.drv/window.c b/dlls/winewayland.drv/window.c
+index 2c188576430..eb85ea54e1a 100644
+--- a/dlls/winewayland.drv/window.c
++++ b/dlls/winewayland.drv/window.c
+@@ -1665,6 +1665,9 @@ LRESULT WAYLAND_WindowMessage(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp)
+             wayland_surface_for_hwnd_unlock(wayland_surface);
+         }
+         break;
++    case WM_WAYLAND_CLIPBOARD_WINDOW_CREATE:
++        wayland_data_device_ensure_clipboard_window(thread_wayland());
++        break;
+     default:
+         FIXME("got window msg %x hwnd %p wp %lx lp %lx\n", msg, hwnd, wp, lp);
+     }
+-- 
+2.35.1
+

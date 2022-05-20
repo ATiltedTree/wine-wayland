@@ -1,0 +1,49 @@
+From 4fc8b238b6d4f2873bbad005023733d2974fdae3 Mon Sep 17 00:00:00 2001
+From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
+Date: Wed, 27 Oct 2021 17:41:37 +0300
+Subject: [PATCH 068/164] winewayland.drv: Update children surfaces when parent
+ is updated
+
+When a parent Wayland surface is recreated, mark the children surfaces
+as requiring an update, so that the get eventually recreated using the
+new parent.
+
+Signed-off-by: Alexandros Frantzis <alexandros.frantzis@collabora.com>
+---
+ dlls/winewayland.drv/window.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+
+diff --git a/dlls/winewayland.drv/window.c b/dlls/winewayland.drv/window.c
+index ac5097917f1..968f5ce47a1 100644
+--- a/dlls/winewayland.drv/window.c
++++ b/dlls/winewayland.drv/window.c
+@@ -544,7 +544,26 @@ static void wayland_win_data_update_wayland_surface(struct wayland_win_data *dat
+     if (data->wayland_surface != surface)
+     {
+         if (data->wayland_surface)
++        {
++            struct wayland_surface *child;
++
++            /* Dependent Wayland surfaces require an update, so that they point
++             * to the updated surface. */
++            wayland_mutex_lock(&data->wayland_surface->mutex);
++            wl_list_for_each(child, &data->wayland_surface->child_list, link)
++            {
++                struct wayland_win_data *child_data;
++                if ((child_data = wayland_win_data_get(child->hwnd)))
++                {
++                    child_data->wayland_surface_needs_update = TRUE;
++                    wayland_win_data_release(child_data);
++                }
++            }
++            wayland_mutex_unlock(&data->wayland_surface->mutex);
++
+             wayland_surface_unref(data->wayland_surface);
++        }
++
+         data->wayland_surface = surface;
+     }
+ }
+-- 
+2.35.1
+

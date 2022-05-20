@@ -1,0 +1,128 @@
+From 53572fade0515a751fd2c946601e6df8751ecd69 Mon Sep 17 00:00:00 2001
+From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
+Date: Tue, 31 Aug 2021 17:16:12 +0300
+Subject: [PATCH 006/164] winewayland.drv: Add stub for per-thread data.
+
+Handle allocation and deallocation of per-thread data (currently without
+any actual contents).
+
+Signed-off-by: Alexandros Frantzis <alexandros.frantzis@collabora.com>
+---
+ dlls/winewayland.drv/Makefile.in       |  1 +
+ dlls/winewayland.drv/waylanddrv.h      | 16 +++++++++
+ dlls/winewayland.drv/waylanddrv_main.c | 49 ++++++++++++++++++++++++++
+ 3 files changed, 66 insertions(+)
+
+diff --git a/dlls/winewayland.drv/Makefile.in b/dlls/winewayland.drv/Makefile.in
+index fb368679edf..7c95a1993f6 100644
+--- a/dlls/winewayland.drv/Makefile.in
++++ b/dlls/winewayland.drv/Makefile.in
+@@ -1,5 +1,6 @@
+ EXTRADEFS = -DWINE_NO_LONG_TYPES
+ MODULE = winewayland.drv
++IMPORTS = user32
+ EXTRAINCL = $(WAYLAND_CLIENT_CFLAGS)
+ EXTRALIBS = $(WAYLAND_CLIENT_LIBS)
+ CFLAGS = -std=c11 -Wno-declaration-after-statement
+diff --git a/dlls/winewayland.drv/waylanddrv.h b/dlls/winewayland.drv/waylanddrv.h
+index 9315e00583f..915bb448792 100644
+--- a/dlls/winewayland.drv/waylanddrv.h
++++ b/dlls/winewayland.drv/waylanddrv.h
+@@ -30,6 +30,7 @@
+ 
+ #include "windef.h"
+ #include "winbase.h"
++#include "ntuser.h"
+ 
+ /**********************************************************************
+  *          Globals
+@@ -37,6 +38,21 @@
+ 
+ extern struct wl_display *process_wl_display DECLSPEC_HIDDEN;
+ 
++/**********************************************************************
++ *          Wayland thread data
++ */
++
++struct wayland_thread_data
++{
++};
++
++extern struct wayland_thread_data *wayland_init_thread_data(void) DECLSPEC_HIDDEN;
++
++static inline struct wayland_thread_data *wayland_thread_data(void)
++{
++    return NtUserGetThreadInfo()->driver_data;
++}
++
+ /**********************************************************************
+  *          Wayland initialization
+  */
+diff --git a/dlls/winewayland.drv/waylanddrv_main.c b/dlls/winewayland.drv/waylanddrv_main.c
+index 607a5770e0f..550261dea40 100644
+--- a/dlls/winewayland.drv/waylanddrv_main.c
++++ b/dlls/winewayland.drv/waylanddrv_main.c
+@@ -24,11 +24,60 @@
+ 
+ #include "waylanddrv.h"
+ 
++#include "wine/debug.h"
++#include "wine/gdi_driver.h"
++
++#include <stdlib.h>
++
++WINE_DEFAULT_DEBUG_CHANNEL(waylanddrv);
++
++/***********************************************************************
++ *           Initialize per thread data
++ */
++struct wayland_thread_data *wayland_init_thread_data(void)
++{
++    struct wayland_thread_data *data = wayland_thread_data();
++
++    if (data) return data;
++
++    if (!(data = calloc(1, sizeof(*data))))
++    {
++        ERR("could not create data\n");
++        ExitProcess(1);
++    }
++
++    NtUserGetThreadInfo()->driver_data = data;
++
++    return data;
++}
++
++/***********************************************************************
++ *           ThreadDetach (WAYLAND.@)
++ */
++static void WAYLAND_ThreadDetach(void)
++{
++    struct wayland_thread_data *data = wayland_thread_data();
++
++    if (data)
++    {
++        free(data);
++        /* clear data in case we get re-entered from user32 before the thread is truly dead */
++        NtUserGetThreadInfo()->driver_data = NULL;
++    }
++}
++
++static const struct user_driver_funcs waylanddrv_funcs =
++{
++    .pThreadDetach = WAYLAND_ThreadDetach,
++};
++
+ /***********************************************************************
+  *           WAYLANDDRV process initialisation routine
+  */
+ static BOOL process_attach(void)
+ {
++    __wine_set_user_driver(&waylanddrv_funcs, WINE_GDI_DRIVER_VERSION);
++
+     if (!wayland_process_init()) return FALSE;
+ 
+     return TRUE;
+-- 
+2.35.1
+
