@@ -1,7 +1,7 @@
-From fb87a6d25f05c887ef1d6014c51092452967224e Mon Sep 17 00:00:00 2001
+From 80dffd55249b936ade077184aa393511c99cc258 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Wed, 8 Sep 2021 12:49:26 +0300
-Subject: [PATCH 061/164] winewayland.drv: Handle interactive window resizing.
+Subject: [PATCH 061/165] winewayland.drv: Handle interactive window resizing.
 
 Propagate resize notification to the Wayland compositor, so it can
 update the surface size by sending new Wayland configure events.

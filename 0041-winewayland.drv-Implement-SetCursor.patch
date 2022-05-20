@@ -1,7 +1,7 @@
-From 737fafeb77e4b7c4adb0ff1588cf3b01a360be6d Mon Sep 17 00:00:00 2001
+From e7739d4884f19ed6cfe93de0d4a412f359007a40 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Mon, 4 Oct 2021 13:02:25 +0300
-Subject: [PATCH 041/164] winewayland.drv: Implement SetCursor.
+Subject: [PATCH 041/165] winewayland.drv: Implement SetCursor.
 
 Instruct the Wayland compositor to set or update the cursor surface for
 the Wayland surface that has the pointer focus when SetCursor is called.

@@ -1,7 +1,7 @@
-From 3835b0bb9338c584d9b215a41a97aa920ccd5ea2 Mon Sep 17 00:00:00 2001
+From 1bbd6424e4ebbe15ca4594f13a0e48a34b7544a7 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Fri, 3 Sep 2021 16:49:33 +0300
-Subject: [PATCH 039/164] winewayland.drv: Implement
+Subject: [PATCH 039/165] winewayland.drv: Implement
  MsgWaitForMultipleObjectsEx.
 
 Prepare for handling input events by dispatching thread Wayland events

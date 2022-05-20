@@ -1,7 +1,7 @@
-From c94446eda6c441f902c539c464475d823e781c87 Mon Sep 17 00:00:00 2001
+From a48e1c23e4791fa833e8ef71fab8fb226a016d01 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Tue, 14 Sep 2021 14:34:46 +0300
-Subject: [PATCH 094/164] winewayland.drv: Implement wglMakeCurrent and
+Subject: [PATCH 094/165] winewayland.drv: Implement wglMakeCurrent and
  wglMakeContextCurrentARB.
 
 Signed-off-by: Alexandros Frantzis <alexandros.frantzis@collabora.com>

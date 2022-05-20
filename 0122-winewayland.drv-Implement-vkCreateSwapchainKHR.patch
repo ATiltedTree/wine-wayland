@@ -1,7 +1,7 @@
-From 0bc0ccda0959dad1815999b56471542e79350c30 Mon Sep 17 00:00:00 2001
+From faf45d13efe9e2a3a62728fcf2f501548c576d5c Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Fri, 17 Sep 2021 12:21:29 +0300
-Subject: [PATCH 122/164] winewayland.drv: Implement vkCreateSwapchainKHR.
+Subject: [PATCH 122/165] winewayland.drv: Implement vkCreateSwapchainKHR.
 
 Create Win32 VkSwapchainKHR objects which are backed by native Wayland
 VkSwapchainKHR objects. We use the native VkSwapchainKHR handle as the

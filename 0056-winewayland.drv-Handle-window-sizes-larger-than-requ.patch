@@ -1,7 +1,7 @@
-From 6da18b6c51cf198d54fd65b2d99b86eb5d0c0f04 Mon Sep 17 00:00:00 2001
+From 01d6e6cdab51f6b51b0f63514ef97b152ed5ac06 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Wed, 17 Nov 2021 18:12:25 +0200
-Subject: [PATCH 056/164] winewayland.drv: Handle window sizes larger than
+Subject: [PATCH 056/165] winewayland.drv: Handle window sizes larger than
  required by Wayland.
 
 If the application provides a window larger than what is required by the

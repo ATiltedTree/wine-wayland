@@ -1,7 +1,7 @@
-From 81046724dc9a494e1792345d2aca3d597cffa46d Mon Sep 17 00:00:00 2001
+From ce1d189fdd8e12509bf9425c407558c2ac37a321 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Thu, 23 Sep 2021 12:43:19 +0300
-Subject: [PATCH 156/164] winewayland.drv: Introduce functions for IDropTarget
+Subject: [PATCH 156/165] winewayland.drv: Introduce functions for IDropTarget
  discovery.
 
 Implement functions to find the IDropTarget for a particular point in a

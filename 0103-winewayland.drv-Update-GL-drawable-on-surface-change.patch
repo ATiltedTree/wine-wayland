@@ -1,7 +1,7 @@
-From b053b58274d303ebb64d590a5e0f1265d7d9f8f0 Mon Sep 17 00:00:00 2001
+From d8d1c4f7f9e88eb4cf3083bab700f2e150356a20 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Thu, 30 Sep 2021 11:23:00 +0300
-Subject: [PATCH 103/164] winewayland.drv: Update GL drawable on surface
+Subject: [PATCH 103/165] winewayland.drv: Update GL drawable on surface
  changes.
 
 When the Wayland surface for a window changes, also update

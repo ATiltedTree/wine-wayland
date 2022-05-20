@@ -1,7 +1,7 @@
-From 965870825c37db7389f32d7b0d66670aa86b4465 Mon Sep 17 00:00:00 2001
+From 41e1f713280677d8fc7927f563faa4b7d007251f Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Mon, 6 Sep 2021 13:55:18 +0300
-Subject: [PATCH 046/164] winewayland.drv: Basic support for Wayland keymaps.
+Subject: [PATCH 046/165] winewayland.drv: Basic support for Wayland keymaps.
 
 Handle the keymap information sent by the compositor, and try to match
 the keycodes in the keymap to keys from a keyboard layout, in order to

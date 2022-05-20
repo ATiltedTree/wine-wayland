@@ -1,7 +1,7 @@
-From 5a0a2b78e183a974117a1f6625056912deb1b864 Mon Sep 17 00:00:00 2001
+From 05e8559d6fcd9955bc5d37d6f19122226b4e71c9 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Thu, 30 Sep 2021 11:24:36 +0300
-Subject: [PATCH 104/164] winewayland.drv: Destroy GL drawable on window
+Subject: [PATCH 104/165] winewayland.drv: Destroy GL drawable on window
  destruction.
 
 Signed-off-by: Alexandros Frantzis <alexandros.frantzis@collabora.com>

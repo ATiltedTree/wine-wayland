@@ -1,7 +1,7 @@
-From 4c4340bc7561a4104c715ad5ea87751c7e8af375 Mon Sep 17 00:00:00 2001
+From 5205b311d42d68dfddae4d23ad33c1e31ab957dc Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Thu, 18 Nov 2021 10:15:43 +0200
-Subject: [PATCH 030/164] winewayland.drv: Add function to check surface state
+Subject: [PATCH 030/165] winewayland.drv: Add function to check surface state
  compatibility.
 
 Certain Wayland surface states place strict requirements on the surface

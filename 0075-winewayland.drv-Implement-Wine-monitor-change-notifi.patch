@@ -1,7 +1,7 @@
-From f9adc284813bc20bd255533231c963d9eca2b9b5 Mon Sep 17 00:00:00 2001
+From 509fe1a6c781ca7af324a43f649f6baeabe5a91d Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Wed, 29 Sep 2021 13:45:18 +0300
-Subject: [PATCH 075/164] winewayland.drv: Implement Wine monitor change
+Subject: [PATCH 075/165] winewayland.drv: Implement Wine monitor change
  notification.
 
 Introduce a mechanism to synchronously notify all Wayland capable

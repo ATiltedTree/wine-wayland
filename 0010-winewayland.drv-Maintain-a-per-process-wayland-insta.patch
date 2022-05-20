@@ -1,7 +1,7 @@
-From d6de9d381c7dd90d9a69adb65ad1f5bdbcac3b6d Mon Sep 17 00:00:00 2001
+From 8fa3ac547d06963af4202799b04e354397c057c1 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Mon, 8 Nov 2021 12:34:39 +0200
-Subject: [PATCH 010/164] winewayland.drv: Maintain a per-process wayland
+Subject: [PATCH 010/165] winewayland.drv: Maintain a per-process wayland
  instance.
 
 Signed-off-by: Alexandros Frantzis <alexandros.frantzis@collabora.com>

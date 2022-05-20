@@ -1,7 +1,7 @@
-From 4c71beac6c61ce7156fd6e6806275d535cb670b5 Mon Sep 17 00:00:00 2001
+From 3ecbaf2edc9958051ea8f20666539dbe614d2f07 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Fri, 18 Mar 2022 15:50:23 +0200
-Subject: [PATCH 079/164] winewayland.drv: Introduce support for dmabuf
+Subject: [PATCH 079/165] winewayland.drv: Introduce support for dmabuf
  buffers.
 
 We will be using dmabuf buffers to implement WGL support in upcoming
@@ -20,7 +20,7 @@ Signed-off-by: Alexandros Frantzis <alexandros.frantzis@collabora.com>
  create mode 100644 dlls/winewayland.drv/wayland_dmabuf.c
 
 diff --git a/configure b/configure
-index 5123a74f79a..3c7d59f6632 100755
+index c8f8e076a6c..755d5d9f536 100755
 --- a/configure
 +++ b/configure
 @@ -701,6 +701,8 @@ DBUS_CFLAGS
@@ -32,7 +32,7 @@ index 5123a74f79a..3c7d59f6632 100755
  XKBCOMMON_LIBS
  XKBCOMMON_CFLAGS
  WAYLAND_CURSOR_LIBS
-@@ -1718,6 +1720,8 @@ WAYLAND_CURSOR_CFLAGS
+@@ -1717,6 +1719,8 @@ WAYLAND_CURSOR_CFLAGS
  WAYLAND_CURSOR_LIBS
  XKBCOMMON_CFLAGS
  XKBCOMMON_LIBS
@@ -41,7 +41,7 @@ index 5123a74f79a..3c7d59f6632 100755
  INOTIFY_CFLAGS
  INOTIFY_LIBS
  DBUS_CFLAGS
-@@ -2531,6 +2535,8 @@ Some influential environment variables:
+@@ -2530,6 +2534,8 @@ Some influential environment variables:
                C compiler flags for xkbcommon, overriding pkg-config
    XKBCOMMON_LIBS
                Linker flags for xkbcommon, overriding pkg-config
@@ -50,7 +50,7 @@ index 5123a74f79a..3c7d59f6632 100755
    INOTIFY_CFLAGS
                C compiler flags for libinotify, overriding pkg-config
    INOTIFY_LIBS
-@@ -16018,6 +16024,78 @@ else $as_nop
+@@ -16075,6 +16081,78 @@ else $as_nop
    XKBCOMMON_LIBS=""
  fi
  
@@ -129,7 +129,7 @@ index 5123a74f79a..3c7d59f6632 100755
  CPPFLAGS=$ac_save_CPPFLAGS
  
  fi
-@@ -16025,7 +16103,8 @@ if test -z "$WAYLAND_CLIENT_LIBS" ||
+@@ -16082,7 +16160,8 @@ if test -z "$WAYLAND_CLIENT_LIBS" ||
                             test -z "$WAYLAND_PROTOCOLS_DATADIR" ||
                             test -z "$WAYLAND_SCANNER" ||
                             test -z "$WAYLAND_CURSOR_LIBS" ||
@@ -139,7 +139,7 @@ index 5123a74f79a..3c7d59f6632 100755
  then :
    case "x$with_wayland" in
    x)   as_fn_append wine_notices "|Wayland ${notice_platform}development files not found or not new enough, the Wayland driver won't be supported." ;;
-@@ -23495,6 +23574,8 @@ WAYLAND_CURSOR_CFLAGS = $WAYLAND_CURSOR_CFLAGS
+@@ -23616,6 +23695,8 @@ WAYLAND_CURSOR_CFLAGS = $WAYLAND_CURSOR_CFLAGS
  WAYLAND_CURSOR_LIBS = $WAYLAND_CURSOR_LIBS
  XKBCOMMON_CFLAGS = $XKBCOMMON_CFLAGS
  XKBCOMMON_LIBS = $XKBCOMMON_LIBS
@@ -149,10 +149,10 @@ index 5123a74f79a..3c7d59f6632 100755
  INOTIFY_CFLAGS = $INOTIFY_CFLAGS
  INOTIFY_LIBS = $INOTIFY_LIBS
 diff --git a/configure.ac b/configure.ac
-index 6eb3c942c39..b888d372fe9 100644
+index 8625a2a03df..2208a27583a 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -1378,12 +1378,16 @@ then
+@@ -1379,12 +1379,16 @@ then
      WINE_PACKAGE_FLAGS(XKBCOMMON,[xkbcommon],,,,
          [AC_CHECK_HEADERS([xkbcommon/xkbcommon.h])
           AC_CHECK_LIB(xkbcommon,xkb_context_new,[:],[XKBCOMMON_LIBS=""],[$XKBCOMMON_LIBS])])
@@ -399,7 +399,7 @@ index 919d648e74e..e20e8885160 100644
   *          Wayland buffer queue
   */
 diff --git a/include/config.h.in b/include/config.h.in
-index 57cd3bd473d..56cfa612a35 100644
+index 4404fb0ff5d..0dc23e19fdd 100644
 --- a/include/config.h.in
 +++ b/include/config.h.in
 @@ -53,6 +53,9 @@

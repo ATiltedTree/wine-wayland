@@ -1,7 +1,7 @@
-From e7d1ff641794c823636e847d237a9f6f75afc90d Mon Sep 17 00:00:00 2001
+From 4d0934be033094ff6cb0f29f8c98bef54c200952 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Wed, 22 Sep 2021 17:30:21 +0300
-Subject: [PATCH 153/164] winewayland.drv: Implement IDataObject::QueryGetData
+Subject: [PATCH 153/165] winewayland.drv: Implement IDataObject::QueryGetData
  for data offers.
 
 Check if for any of the available mime types of the associated data

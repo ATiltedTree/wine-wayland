@@ -1,7 +1,7 @@
-From 82d1cd59fa53f6daad4a049f0545632584cd3102 Mon Sep 17 00:00:00 2001
+From e1eec9b17287c467b89f43ce17013a18cf07cde1 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Thu, 2 Sep 2021 17:19:09 +0300
-Subject: [PATCH 026/164] winewayland.drv: Add a Wayland SHM buffer queue.
+Subject: [PATCH 026/165] winewayland.drv: Add a Wayland SHM buffer queue.
 
 Introduce a buffer queue object to handle a collection of Wayland SHM
 buffers, including their acquisition by the driver and their release

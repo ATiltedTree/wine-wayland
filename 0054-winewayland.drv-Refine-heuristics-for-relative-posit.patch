@@ -1,7 +1,7 @@
-From 6804936f4e217909e21793fb4d4c828e7f1bddaf Mon Sep 17 00:00:00 2001
+From 5b7e361e6086773428132314955b1af98e1fe3b9 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Wed, 8 Sep 2021 11:34:08 +0300
-Subject: [PATCH 054/164] winewayland.drv: Refine heuristics for relative
+Subject: [PATCH 054/165] winewayland.drv: Refine heuristics for relative
  positioning of windows.
 
 Before this commit, the simple heuristic for using a Wayland subsurface

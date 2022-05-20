@@ -1,7 +1,7 @@
-From b47c9b922ef79409f2641a749bbced2726dee9e1 Mon Sep 17 00:00:00 2001
+From 0a60a1cbcabb548d4330bf835153d058c241abbe Mon Sep 17 00:00:00 2001
 From: Leandro Ribeiro <leandro.ribeiro@collabora.com>
 Date: Tue, 8 Mar 2022 14:22:59 -0300
-Subject: [PATCH 043/164] winewayland.drv: Add support for native Wayland
+Subject: [PATCH 043/165] winewayland.drv: Add support for native Wayland
  cursors.
 
 Until now, we were using the cursors provided by Wine. Add native
@@ -25,7 +25,7 @@ Signed-off-by: Alexandros Frantzis <alexandros.frantzis@collabora.com>
  8 files changed, 431 insertions(+), 39 deletions(-)
 
 diff --git a/configure b/configure
-index 1bb8232df7c..e3c278d49c8 100755
+index e3d6266dd88..461f4213e85 100755
 --- a/configure
 +++ b/configure
 @@ -701,6 +701,8 @@ DBUS_CFLAGS
@@ -37,7 +37,7 @@ index 1bb8232df7c..e3c278d49c8 100755
  WAYLAND_SCANNER
  WAYLAND_PROTOCOLS_DATADIR
  WAYLAND_PROTOCOLS_LIBS
-@@ -1710,6 +1712,8 @@ WAYLAND_CLIENT_CFLAGS
+@@ -1709,6 +1711,8 @@ WAYLAND_CLIENT_CFLAGS
  WAYLAND_CLIENT_LIBS
  WAYLAND_PROTOCOLS_CFLAGS
  WAYLAND_PROTOCOLS_LIBS
@@ -46,7 +46,7 @@ index 1bb8232df7c..e3c278d49c8 100755
  INOTIFY_CFLAGS
  INOTIFY_LIBS
  DBUS_CFLAGS
-@@ -2515,6 +2519,10 @@ Some influential environment variables:
+@@ -2514,6 +2518,10 @@ Some influential environment variables:
                C compiler flags for wayland-protocols, overriding pkg-config
    WAYLAND_PROTOCOLS_LIBS
                Linker flags for wayland-protocols, overriding pkg-config
@@ -57,7 +57,7 @@ index 1bb8232df7c..e3c278d49c8 100755
    INOTIFY_CFLAGS
                C compiler flags for libinotify, overriding pkg-config
    INOTIFY_LIBS
-@@ -15860,10 +15868,83 @@ printf "%s\n" "no" >&6; }
+@@ -15917,10 +15925,83 @@ printf "%s\n" "no" >&6; }
  fi
  
  
@@ -142,7 +142,7 @@ index 1bb8232df7c..e3c278d49c8 100755
  then :
    case "x$with_wayland" in
    x)   as_fn_append wine_notices "|Wayland ${notice_platform}development files not found or not new enough, the Wayland driver won't be supported." ;;
-@@ -23329,6 +23410,8 @@ WAYLAND_PROTOCOLS_CFLAGS = $WAYLAND_PROTOCOLS_CFLAGS
+@@ -23450,6 +23531,8 @@ WAYLAND_PROTOCOLS_CFLAGS = $WAYLAND_PROTOCOLS_CFLAGS
  WAYLAND_PROTOCOLS_LIBS = $WAYLAND_PROTOCOLS_LIBS
  WAYLAND_PROTOCOLS_DATADIR = $WAYLAND_PROTOCOLS_DATADIR
  WAYLAND_SCANNER = $WAYLAND_SCANNER
@@ -152,10 +152,10 @@ index 1bb8232df7c..e3c278d49c8 100755
  INOTIFY_CFLAGS = $INOTIFY_CFLAGS
  INOTIFY_LIBS = $INOTIFY_LIBS
 diff --git a/configure.ac b/configure.ac
-index 2f621d2b5aa..ad71c0f98c4 100644
+index 88dd2f4233f..57611950dc8 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -1371,10 +1371,15 @@ then
+@@ -1372,10 +1372,15 @@ then
                     `$PKG_CONFIG --atleast-version=1.14 wayland-protocols && $PKG_CONFIG --variable=pkgdatadir wayland-protocols`)])
      AC_PATH_PROG(WAYLAND_SCANNER,wayland-scanner,
                   [`$PKG_CONFIG --variable=wayland_scanner wayland-scanner`])
@@ -695,10 +695,10 @@ index 024c9630794..9b2fb15f848 100644
                                                HCURSOR handle) DECLSPEC_HIDDEN;
  BOOL wayland_init_set_cursor(void) DECLSPEC_HIDDEN;
 diff --git a/include/config.h.in b/include/config.h.in
-index 719c32e0668..34164369173 100644
+index e06f2b26cbe..04896af480e 100644
 --- a/include/config.h.in
 +++ b/include/config.h.in
-@@ -688,6 +688,9 @@
+@@ -703,6 +703,9 @@
  /* Define to 1 if you have the <wayland-client.h> header file. */
  #undef HAVE_WAYLAND_CLIENT_H
  

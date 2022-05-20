@@ -1,7 +1,7 @@
-From 88e66bf93d1c65e39d7582aab3ca3fcfff74d53d Mon Sep 17 00:00:00 2001
+From a4e31135fa4790714cbb3b49142cb6ec6d95b96b Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Mon, 20 Sep 2021 12:58:45 +0300
-Subject: [PATCH 128/164] winewayland.drv: Implement
+Subject: [PATCH 128/165] winewayland.drv: Implement
  vkGetDeviceGroupSurfacePresentModesKHR.
 
 This is a simple passthrough implementation to the native Vulkan driver,

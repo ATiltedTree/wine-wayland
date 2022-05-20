@@ -1,7 +1,7 @@
-From 0cc19c6c960ba14742d83c8cdf025d25c23a0fb8 Mon Sep 17 00:00:00 2001
+From a0643af107c78d26df7278f7c64fcc9dfb9d6345 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Tue, 14 Sep 2021 15:26:32 +0300
-Subject: [PATCH 099/164] winewayland.drv: Implement wglSwapBuffers.
+Subject: [PATCH 099/165] winewayland.drv: Implement wglSwapBuffers.
 
 Before swapping we check that the target Wayland surface allows drawing,
 to avoid commits with incorrectly sized buffers during reconfigurations.

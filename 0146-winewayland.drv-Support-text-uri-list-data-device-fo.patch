@@ -1,7 +1,7 @@
-From 67131719b28619263ed440d4654f19e0f3ced7ca Mon Sep 17 00:00:00 2001
+From 229eaa9ff6b6b21d122ad564422d5fff1ebc83df Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Wed, 22 Sep 2021 13:12:09 +0300
-Subject: [PATCH 146/164] winewayland.drv: Support text/uri-list data device
+Subject: [PATCH 146/165] winewayland.drv: Support text/uri-list data device
  format.
 
 Convert between CF_HDROP Windows clipboard format and "text/uri-list"

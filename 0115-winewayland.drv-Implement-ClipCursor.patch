@@ -1,7 +1,7 @@
-From 13a2bb1c00d5f92bf81f7b226dc4dca60343f5b8 Mon Sep 17 00:00:00 2001
+From 454a4bb9a236a106eca286ce83eead2befff9ccc Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Wed, 15 Sep 2021 16:18:20 +0300
-Subject: [PATCH 115/164] winewayland.drv: Implement ClipCursor.
+Subject: [PATCH 115/165] winewayland.drv: Implement ClipCursor.
 
 Implement cursor clipping by using the zwp_pointer_constraints_v1
 and the zwp_relative_pointer_v1 Wayland protocols.

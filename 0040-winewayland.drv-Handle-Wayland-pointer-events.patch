@@ -1,7 +1,7 @@
-From 433ff8877363c0878f2376581ad3bb980f8de8cf Mon Sep 17 00:00:00 2001
+From 1668abff56a9dfbd14b86798d1a9c339de2b37f8 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Mon, 4 Oct 2021 12:56:08 +0300
-Subject: [PATCH 040/164] winewayland.drv: Handle Wayland pointer events.
+Subject: [PATCH 040/165] winewayland.drv: Handle Wayland pointer events.
 
 Handle pointer events from the Wayland compositor, transform them
 appropriately and send them to Wine core.

@@ -1,7 +1,7 @@
-From 684a6e832bb1498d80e2e4c96b390e376d7e7bc8 Mon Sep 17 00:00:00 2001
+From 6920102845ebff45df3c4e6e8a1acd8b2245b96f Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Tue, 28 Sep 2021 13:11:01 +0300
-Subject: [PATCH 031/164] winewayland.drv: Add function to commit a buffer to a
+Subject: [PATCH 031/165] winewayland.drv: Add function to commit a buffer to a
  Wayland surface.
 
 The buffer is committed along with damage information to allow the

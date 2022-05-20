@@ -1,7 +1,7 @@
-From e56c2b2db7f00d5cf7f34e4ced59ff3605fd8fa8 Mon Sep 17 00:00:00 2001
+From ce84c2b11e38e4decf39b0de71d2d8abf89f7cdd Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Thu, 14 Apr 2022 11:41:31 +0300
-Subject: [PATCH 044/164] winewayland.drv: Add
+Subject: [PATCH 044/165] winewayland.drv: Add
  wayland_surface_from_hwnd_lock/unlock helpers.
 
 Add helpers for safely getting the wayland_surface associated with a

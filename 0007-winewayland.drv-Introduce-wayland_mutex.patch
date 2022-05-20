@@ -1,7 +1,7 @@
-From 438657b075c902e3d1bc796dd3f73a28e9f4cbe2 Mon Sep 17 00:00:00 2001
+From 61e70a6f3871e183493bdedcf0764aad09c01b43 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Tue, 18 Jan 2022 12:52:10 +0200
-Subject: [PATCH 007/164] winewayland.drv: Introduce wayland_mutex.
+Subject: [PATCH 007/165] winewayland.drv: Introduce wayland_mutex.
 
 Introduce a thin wrapper around pthread mutex to provide more robust
 mutex handling and informative error messages in case of suspected

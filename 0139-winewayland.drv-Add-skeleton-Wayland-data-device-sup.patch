@@ -1,7 +1,7 @@
-From 6d045bda59ebad8ba498bb62a69c2b5ebb4472d7 Mon Sep 17 00:00:00 2001
+From e15644a9b5fcf25b227c4a39b8a07e7f6e838698 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Wed, 22 Sep 2021 10:59:51 +0300
-Subject: [PATCH 139/164] winewayland.drv: Add skeleton Wayland data device
+Subject: [PATCH 139/165] winewayland.drv: Add skeleton Wayland data device
  support.
 
 This will evolve to support clipboard and drag-and-drop operations in

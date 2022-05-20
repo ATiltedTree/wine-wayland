@@ -1,7 +1,7 @@
-From d7c772b83eb1e51a0d14c73c8ea973a696e05d9d Mon Sep 17 00:00:00 2001
+From 3d2e10d45d2a4b411a08748ead3dfd6864706506 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Wed, 8 Dec 2021 16:30:05 +0200
-Subject: [PATCH 164/164] winewayland.drv: Input event compatibility with
+Subject: [PATCH 164/165] winewayland.drv: Input event compatibility with
  wine-staging
 
 The rawinput patches in wine-staging require the drivers to send

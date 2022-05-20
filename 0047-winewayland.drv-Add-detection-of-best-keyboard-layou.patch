@@ -1,7 +1,7 @@
-From 9228ff53dd675e8296ae559fb2c4c9546786eec4 Mon Sep 17 00:00:00 2001
+From c1382de119dc20364bad3601d5d6b8244b931cfc Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Mon, 6 Sep 2021 13:57:33 +0300
-Subject: [PATCH 047/164] winewayland.drv: Add detection of best keyboard
+Subject: [PATCH 047/165] winewayland.drv: Add detection of best keyboard
  layout match.
 
 Add a mechanism to detect the best matching keyboard layout for a given

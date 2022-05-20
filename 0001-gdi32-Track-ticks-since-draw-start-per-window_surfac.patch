@@ -1,7 +1,7 @@
-From 45da6f8a7064ae0c74a6ed42820967a74c0b0843 Mon Sep 17 00:00:00 2001
+From 77a6563ba9d28169bad4ee200656e02bb1a3219e Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Thu, 10 Dec 2020 14:09:36 +0200
-Subject: [PATCH 001/164] gdi32: Track ticks since draw start per
+Subject: [PATCH 001/165] gdi32: Track ticks since draw start per
  window_surface.
 
 Track ticks since draw start per window_surface, instead of per window
@@ -34,10 +34,10 @@ Signed-off-by: Alexandros Frantzis <alexandros.frantzis@collabora.com>
  2 files changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/dlls/win32u/dibdrv/dc.c b/dlls/win32u/dibdrv/dc.c
-index a8fd69fac84..4d4f0b61b24 100644
+index 7c60466d9ee..434b0cbf778 100644
 --- a/dlls/win32u/dibdrv/dc.c
 +++ b/dlls/win32u/dibdrv/dc.c
-@@ -728,7 +728,6 @@ struct windrv_physdev
+@@ -731,7 +731,6 @@ struct windrv_physdev
      struct gdi_physdev     dev;
      struct dibdrv_physdev *dibdrv;
      struct window_surface *surface;
@@ -45,7 +45,7 @@ index a8fd69fac84..4d4f0b61b24 100644
  };
  
  static const struct gdi_dc_funcs window_driver;
-@@ -742,13 +741,15 @@ static inline void lock_surface( struct windrv_physdev *dev )
+@@ -745,13 +744,15 @@ static inline void lock_surface( struct windrv_physdev *dev )
  {
      /* gdi_lock should not be locked */
      dev->surface->funcs->lock( dev->surface );
@@ -64,10 +64,10 @@ index a8fd69fac84..4d4f0b61b24 100644
  
  static void CDECL unlock_bits_surface( struct gdi_image_bits *bits )
 diff --git a/include/wine/gdi_driver.h b/include/wine/gdi_driver.h
-index a1fe01d2a43..e8377a6ed70 100644
+index 21fff4d4aa2..8d4e7994a4c 100644
 --- a/include/wine/gdi_driver.h
 +++ b/include/wine/gdi_driver.h
-@@ -214,6 +214,7 @@ struct window_surface
+@@ -217,6 +217,7 @@ struct window_surface
      struct list                        entry; /* entry in global list managed by user32 */
      LONG                               ref;   /* reference count */
      RECT                               rect;  /* constant, no locking needed */

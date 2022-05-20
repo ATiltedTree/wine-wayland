@@ -1,7 +1,7 @@
-From f76dc553a3e2f35cfd775dd64652d71a64300f5f Mon Sep 17 00:00:00 2001
+From 1be31931faaf2be9c408f9d156a3beda17d4cdc0 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Fri, 3 Sep 2021 13:49:48 +0300
-Subject: [PATCH 036/164] winewayland.drv: Implement window_surface for
+Subject: [PATCH 036/165] winewayland.drv: Implement window_surface for
  Wayland.
 
 Implement struct window_surface for windows backed by wayland surfaces.

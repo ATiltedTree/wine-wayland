@@ -1,7 +1,7 @@
-From 0fec233ff6206f3c98d05152577e841edb5f57b2 Mon Sep 17 00:00:00 2001
+From e4e61e4f9a4588bbfd8a0fb21c84ba683390cf05 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Wed, 22 Sep 2021 13:14:04 +0300
-Subject: [PATCH 147/164] winewayland.drv: Support common image data device
+Subject: [PATCH 147/165] winewayland.drv: Support common image data device
  format.
 
 Import and export TIFF, PNG, JPEG and GIF image formats.

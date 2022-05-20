@@ -1,7 +1,7 @@
-From 353d7e7b697ff5d3f5074c12bd535431e4c13f77 Mon Sep 17 00:00:00 2001
+From 07080ac022548ba2a572084941f099ba279c5011 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Mon, 13 Sep 2021 17:18:46 +0300
-Subject: [PATCH 074/164] winewayland.drv: Scale surfaces to apply Wine display
+Subject: [PATCH 074/165] winewayland.drv: Scale surfaces to apply Wine display
  modes.
 
 Use the viewporter protocol to scale surfaces on the Wayland compositor

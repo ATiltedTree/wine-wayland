@@ -1,7 +1,7 @@
-From e9e02deb37bc9846bb3b5e4efd16d6916568c65a Mon Sep 17 00:00:00 2001
+From 143f8e50bd924a76809ee8db7daf0d3b637f034f Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Mon, 8 Nov 2021 13:23:34 +0200
-Subject: [PATCH 018/164] winewayland.drv: Track the Wine monitor associated
+Subject: [PATCH 018/165] winewayland.drv: Track the Wine monitor associated
  with a Wayland output.
 
 Signed-off-by: Alexandros Frantzis <alexandros.frantzis@collabora.com>

@@ -1,7 +1,7 @@
-From 71b4cfcc8d1d67454ec6c16d792b3548e7d74ef3 Mon Sep 17 00:00:00 2001
+From 857c5253bb27ab628bffa33033a707ac8662d644 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Thu, 23 Sep 2021 13:05:09 +0300
-Subject: [PATCH 160/164] winewayland.drv: Handle the wl_data_device::drop
+Subject: [PATCH 160/165] winewayland.drv: Handle the wl_data_device::drop
  event.
 
 Relay the event to the IDropTarget at the current drag-and-drop position,

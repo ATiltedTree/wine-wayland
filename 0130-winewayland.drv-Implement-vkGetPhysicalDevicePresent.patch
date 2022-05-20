@@ -1,7 +1,7 @@
-From b56e03702a45c616e737c47022758a8bce1ee3fc Mon Sep 17 00:00:00 2001
+From 02c8b49ff911917ee435e2c7768742ca9c356998 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Mon, 20 Sep 2021 11:04:58 +0300
-Subject: [PATCH 130/164] winewayland.drv: Implement
+Subject: [PATCH 130/165] winewayland.drv: Implement
  vkGetPhysicalDevicePresentRectanglesKHR.
 
 This is a simple passthrough implementation to the native Vulkan driver.

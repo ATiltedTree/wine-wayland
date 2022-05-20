@@ -1,7 +1,7 @@
-From 22df14ad492e859e08356b0d4f4fe7850831e8a6 Mon Sep 17 00:00:00 2001
+From 9be8c82f1bd494c174f2d1259d17cbf0d00129a8 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Wed, 22 Sep 2021 12:04:01 +0300
-Subject: [PATCH 140/164] winewayland.drv: Basic tracking of Wayland data
+Subject: [PATCH 140/165] winewayland.drv: Basic tracking of Wayland data
  offers.
 
 Keep track of the wl_data_offer objects sent by the Wayland compositor,

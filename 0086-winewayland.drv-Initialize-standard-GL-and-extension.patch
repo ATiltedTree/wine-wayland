@@ -1,7 +1,7 @@
-From bb049df6d086d7947ffb24660c875f34aa32b302 Mon Sep 17 00:00:00 2001
+From e60d27f9b692f4330634c719f2e8997283a8695a Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Wed, 29 Sep 2021 14:30:53 +0300
-Subject: [PATCH 086/164] winewayland.drv: Initialize standard GL and extension
+Subject: [PATCH 086/165] winewayland.drv: Initialize standard GL and extension
  functions.
 
 Signed-off-by: Alexandros Frantzis <alexandros.frantzis@collabora.com>

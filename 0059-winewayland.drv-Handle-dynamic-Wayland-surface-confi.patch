@@ -1,7 +1,7 @@
-From 08cdc47bf0f17eab56ef15eb618c78bbb251bddd Mon Sep 17 00:00:00 2001
+From eb0a7e6399ed5f38ced81dd817c1ef150d520e3b Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Wed, 8 Sep 2021 12:30:53 +0300
-Subject: [PATCH 059/164] winewayland.drv: Handle dynamic Wayland surface
+Subject: [PATCH 059/165] winewayland.drv: Handle dynamic Wayland surface
  configure events.
 
 When a Wayland configure event arrives, change the window size and

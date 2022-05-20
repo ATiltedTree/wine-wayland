@@ -1,7 +1,7 @@
-From 78b244281f8de51909cbe0c8da336c9cee50ae75 Mon Sep 17 00:00:00 2001
+From dd482b8e97964d146aa4556147be55e4688444b7 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Mon, 20 Sep 2021 10:43:33 +0300
-Subject: [PATCH 126/164] winewayland.drv: Add mechanism to invalidate Vulkan
+Subject: [PATCH 126/165] winewayland.drv: Add mechanism to invalidate Vulkan
  objects.
 
 When the Wayland surface associated with a Vulkan surface or swapchain

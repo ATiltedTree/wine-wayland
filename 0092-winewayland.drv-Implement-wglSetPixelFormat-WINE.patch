@@ -1,7 +1,7 @@
-From d6ad0d004845abb6e18db0ae44cf9a575d3042cb Mon Sep 17 00:00:00 2001
+From a14320573ef363ba48a7ea0a9451ab92afca101c Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Tue, 14 Sep 2021 13:20:22 +0300
-Subject: [PATCH 092/164] winewayland.drv: Implement wglSetPixelFormat(WINE).
+Subject: [PATCH 092/165] winewayland.drv: Implement wglSetPixelFormat(WINE).
 
 This is the call which signals that a window requires GL rendering, thus
 kickstarting the creation (or update) of a wayland_gl_drawable to

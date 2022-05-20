@@ -1,7 +1,7 @@
-From a66455b82a2f5660513d6fe0e14e2b727a36cf2f Mon Sep 17 00:00:00 2001
+From 311de7e2a2e4cf094f86384f5e6381a4f7bed8f7 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Mon, 6 Sep 2021 13:24:54 +0300
-Subject: [PATCH 045/164] winewayland.drv: Basic handling of Wayland keyboard
+Subject: [PATCH 045/165] winewayland.drv: Basic handling of Wayland keyboard
  events.
 
 Handle Wayland keyboard events and translate them to Windows events,
@@ -24,7 +24,7 @@ Signed-off-by: Alexandros Frantzis <alexandros.frantzis@collabora.com>
  create mode 100644 dlls/winewayland.drv/wayland_keyboard_layout.h
 
 diff --git a/configure b/configure
-index e3c278d49c8..5123a74f79a 100755
+index 461f4213e85..c8f8e076a6c 100755
 --- a/configure
 +++ b/configure
 @@ -701,6 +701,8 @@ DBUS_CFLAGS
@@ -36,7 +36,7 @@ index e3c278d49c8..5123a74f79a 100755
  WAYLAND_CURSOR_LIBS
  WAYLAND_CURSOR_CFLAGS
  WAYLAND_SCANNER
-@@ -1714,6 +1716,8 @@ WAYLAND_PROTOCOLS_CFLAGS
+@@ -1713,6 +1715,8 @@ WAYLAND_PROTOCOLS_CFLAGS
  WAYLAND_PROTOCOLS_LIBS
  WAYLAND_CURSOR_CFLAGS
  WAYLAND_CURSOR_LIBS
@@ -45,7 +45,7 @@ index e3c278d49c8..5123a74f79a 100755
  INOTIFY_CFLAGS
  INOTIFY_LIBS
  DBUS_CFLAGS
-@@ -2523,6 +2527,10 @@ Some influential environment variables:
+@@ -2522,6 +2526,10 @@ Some influential environment variables:
                C compiler flags for wayland-cursor, overriding pkg-config
    WAYLAND_CURSOR_LIBS
                Linker flags for wayland-cursor, overriding pkg-config
@@ -56,7 +56,7 @@ index e3c278d49c8..5123a74f79a 100755
    INOTIFY_CFLAGS
                C compiler flags for libinotify, overriding pkg-config
    INOTIFY_LIBS
-@@ -15938,13 +15946,86 @@ else $as_nop
+@@ -15995,13 +16003,86 @@ else $as_nop
    WAYLAND_CURSOR_LIBS=""
  fi
  
@@ -144,7 +144,7 @@ index e3c278d49c8..5123a74f79a 100755
  then :
    case "x$with_wayland" in
    x)   as_fn_append wine_notices "|Wayland ${notice_platform}development files not found or not new enough, the Wayland driver won't be supported." ;;
-@@ -23412,6 +23493,8 @@ WAYLAND_PROTOCOLS_DATADIR = $WAYLAND_PROTOCOLS_DATADIR
+@@ -23533,6 +23614,8 @@ WAYLAND_PROTOCOLS_DATADIR = $WAYLAND_PROTOCOLS_DATADIR
  WAYLAND_SCANNER = $WAYLAND_SCANNER
  WAYLAND_CURSOR_CFLAGS = $WAYLAND_CURSOR_CFLAGS
  WAYLAND_CURSOR_LIBS = $WAYLAND_CURSOR_LIBS
@@ -154,10 +154,10 @@ index e3c278d49c8..5123a74f79a 100755
  INOTIFY_CFLAGS = $INOTIFY_CFLAGS
  INOTIFY_LIBS = $INOTIFY_LIBS
 diff --git a/configure.ac b/configure.ac
-index ad71c0f98c4..6eb3c942c39 100644
+index 57611950dc8..8625a2a03df 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -1375,11 +1375,15 @@ then
+@@ -1376,11 +1376,15 @@ then
          [AC_CHECK_HEADERS([wayland-cursor.h])
           AC_CHECK_LIB(wayland-cursor,wl_cursor_theme_load,[:],
                        [WAYLAND_CURSOR_LIBS=""],[$WAYLAND_CURSOR_LIBS])])
@@ -1037,10 +1037,10 @@ index 396f4979125..de78e56353d 100644
          FIXME("got window msg %x hwnd %p wp %lx lp %lx\n", msg, hwnd, wp, lp);
      }
 diff --git a/include/config.h.in b/include/config.h.in
-index 34164369173..57cd3bd473d 100644
+index 04896af480e..4404fb0ff5d 100644
 --- a/include/config.h.in
 +++ b/include/config.h.in
-@@ -745,6 +745,9 @@
+@@ -760,6 +760,9 @@
  /* Define if you have the XKB extension */
  #undef HAVE_XKB
  

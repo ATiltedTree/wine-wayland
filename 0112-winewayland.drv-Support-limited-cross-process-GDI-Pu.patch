@@ -1,7 +1,7 @@
-From aba38ee992d15f58edae2f114e90b85a8ed839f8 Mon Sep 17 00:00:00 2001
+From a20d28ac674fdd4aeff6850ff62df3ce84a96ae3 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Fri, 8 Apr 2022 12:46:48 +0300
-Subject: [PATCH 112/164] winewayland.drv: Support limited cross-process GDI
+Subject: [PATCH 112/165] winewayland.drv: Support limited cross-process GDI
  PutImage.
 
 This is a fallback implementation for when the dibdrv cannot perform

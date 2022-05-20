@@ -1,7 +1,7 @@
-From d99ff83503a832de210bf1bd91dcb85bc352a0ea Mon Sep 17 00:00:00 2001
+From e8ba67c1dc5df043945f4fedc0fd7816efc24ec1 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Thu, 2 Sep 2021 15:28:21 +0300
-Subject: [PATCH 014/164] winewayland.drv: Update Windows monitor information
+Subject: [PATCH 014/165] winewayland.drv: Update Windows monitor information
  on Wayland changes.
 
 Whenever the Wayland output display state changes (including during

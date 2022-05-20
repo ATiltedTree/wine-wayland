@@ -1,7 +1,7 @@
-From cb81f4b6771a7867c43c1a5376c4cde4f2b22512 Mon Sep 17 00:00:00 2001
+From 06f3158fffaa4910d30de04763b698849de61897 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Tue, 9 Nov 2021 19:22:04 +0200
-Subject: [PATCH 015/164] winewayland.drv: Broadcast WM_DISPLAYCHANGE after
+Subject: [PATCH 015/165] winewayland.drv: Broadcast WM_DISPLAYCHANGE after
  monitor updates.
 
 Signed-off-by: Alexandros Frantzis <alexandros.frantzis@collabora.com>

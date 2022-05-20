@@ -1,7 +1,7 @@
-From d623b3b77a64c8658c90321d8e9588b987837682 Mon Sep 17 00:00:00 2001
+From 7349668ba5663d37c71c567745b89733d9388e50 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Tue, 5 Oct 2021 10:08:26 +0300
-Subject: [PATCH 143/164] winewayland.drv: Add helper to write all data to a
+Subject: [PATCH 143/165] winewayland.drv: Add helper to write all data to a
  file descriptor.
 
 Add a function that ensures that all data is written to a file

@@ -1,7 +1,7 @@
-From 7c9a51988f8dd66c28a11778a7db03cfd79970bb Mon Sep 17 00:00:00 2001
+From 9e8afaf91c20993baa9e39d4ba2f072968f9b14d Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Thu, 5 May 2022 12:46:37 +0300
-Subject: [PATCH 081/164] winewayland.drv: Introduce support for GBM.
+Subject: [PATCH 081/165] winewayland.drv: Introduce support for GBM.
 
 We will be using GBM to allocate buffers for OpenGL rendering.
 
@@ -24,7 +24,7 @@ Signed-off-by: Alexandros Frantzis <alexandros.frantzis@collabora.com>
  create mode 100644 dlls/winewayland.drv/gbm.c
 
 diff --git a/configure b/configure
-index 3c7d59f6632..bb2679875b7 100755
+index 755d5d9f536..cf1f2e4d19c 100755
 --- a/configure
 +++ b/configure
 @@ -701,6 +701,8 @@ DBUS_CFLAGS
@@ -36,7 +36,7 @@ index 3c7d59f6632..bb2679875b7 100755
  DRM_LIBS
  DRM_CFLAGS
  XKBCOMMON_LIBS
-@@ -1720,6 +1722,8 @@ WAYLAND_CURSOR_CFLAGS
+@@ -1719,6 +1721,8 @@ WAYLAND_CURSOR_CFLAGS
  WAYLAND_CURSOR_LIBS
  XKBCOMMON_CFLAGS
  XKBCOMMON_LIBS
@@ -45,7 +45,7 @@ index 3c7d59f6632..bb2679875b7 100755
  DRM_CFLAGS
  DRM_LIBS
  INOTIFY_CFLAGS
-@@ -2535,6 +2539,8 @@ Some influential environment variables:
+@@ -2534,6 +2538,8 @@ Some influential environment variables:
                C compiler flags for xkbcommon, overriding pkg-config
    XKBCOMMON_LIBS
                Linker flags for xkbcommon, overriding pkg-config
@@ -54,7 +54,7 @@ index 3c7d59f6632..bb2679875b7 100755
    DRM_CFLAGS  C compiler flags for libdrm, overriding pkg-config
    DRM_LIBS    Linker flags for libdrm, overriding pkg-config
    INOTIFY_CFLAGS
-@@ -16024,6 +16030,78 @@ else $as_nop
+@@ -16081,6 +16087,78 @@ else $as_nop
    XKBCOMMON_LIBS=""
  fi
  
@@ -133,7 +133,7 @@ index 3c7d59f6632..bb2679875b7 100755
  CPPFLAGS=$ac_save_CPPFLAGS
  
      if ${DRM_CFLAGS:+false} :
-@@ -16104,6 +16182,7 @@ if test -z "$WAYLAND_CLIENT_LIBS" ||
+@@ -16161,6 +16239,7 @@ if test -z "$WAYLAND_CLIENT_LIBS" ||
                             test -z "$WAYLAND_SCANNER" ||
                             test -z "$WAYLAND_CURSOR_LIBS" ||
                             test -z "$XKBCOMMON_LIBS" ||
@@ -141,7 +141,7 @@ index 3c7d59f6632..bb2679875b7 100755
                             test -z "$DRM_LIBS"
  then :
    case "x$with_wayland" in
-@@ -23574,6 +23653,8 @@ WAYLAND_CURSOR_CFLAGS = $WAYLAND_CURSOR_CFLAGS
+@@ -23695,6 +23774,8 @@ WAYLAND_CURSOR_CFLAGS = $WAYLAND_CURSOR_CFLAGS
  WAYLAND_CURSOR_LIBS = $WAYLAND_CURSOR_LIBS
  XKBCOMMON_CFLAGS = $XKBCOMMON_CFLAGS
  XKBCOMMON_LIBS = $XKBCOMMON_LIBS
@@ -151,10 +151,10 @@ index 3c7d59f6632..bb2679875b7 100755
  DRM_LIBS = $DRM_LIBS
  PCAP_LIBS = $PCAP_LIBS
 diff --git a/configure.ac b/configure.ac
-index b888d372fe9..1021c86bf9f 100644
+index 2208a27583a..064ce74de39 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -1378,6 +1378,9 @@ then
+@@ -1379,6 +1379,9 @@ then
      WINE_PACKAGE_FLAGS(XKBCOMMON,[xkbcommon],,,,
          [AC_CHECK_HEADERS([xkbcommon/xkbcommon.h])
           AC_CHECK_LIB(xkbcommon,xkb_context_new,[:],[XKBCOMMON_LIBS=""],[$XKBCOMMON_LIBS])])
@@ -164,7 +164,7 @@ index b888d372fe9..1021c86bf9f 100644
      WINE_PACKAGE_FLAGS(DRM,[libdrm],,,,
          [AC_CHECK_HEADERS([drm.h])
           AC_CHECK_LIB(drm,drmPrimeHandleToFD,[:],[DRM_LIBS=""],[$DRM_LIBS])])
-@@ -1387,6 +1390,7 @@ WINE_NOTICE_WITH(wayland, [test -z "$WAYLAND_CLIENT_LIBS" ||
+@@ -1388,6 +1391,7 @@ WINE_NOTICE_WITH(wayland, [test -z "$WAYLAND_CLIENT_LIBS" ||
                             test -z "$WAYLAND_SCANNER" ||
                             test -z "$WAYLAND_CURSOR_LIBS" ||
                             test -z "$XKBCOMMON_LIBS" ||
@@ -521,7 +521,7 @@ index 64d09eb4fc2..cd6c3e23926 100644
   *          Registry helpers
   */
 diff --git a/include/config.h.in b/include/config.h.in
-index 56cfa612a35..4dde19b026a 100644
+index 0dc23e19fdd..58f7ec6c3fd 100644
 --- a/include/config.h.in
 +++ b/include/config.h.in
 @@ -92,6 +92,9 @@

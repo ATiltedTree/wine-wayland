@@ -1,7 +1,7 @@
-From 90bb3d28ad8fff8b99b9d03a0f8764216dc82f48 Mon Sep 17 00:00:00 2001
+From c75bd5a20bc78f3ce27a493106b9efe43df0a8e6 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Thu, 10 Dec 2020 18:41:03 +0200
-Subject: [PATCH 004/164] explorer: Add the Wayland driver to the default
+Subject: [PATCH 004/165] explorer: Add the Wayland driver to the default
  driver list.
 
 Add the Wayland driver at the end of the default driver list. This

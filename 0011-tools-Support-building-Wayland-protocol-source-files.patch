@@ -1,7 +1,7 @@
-From b7217e4821859aa1bc079f3afc0c299c5b826bfd Mon Sep 17 00:00:00 2001
+From 2b6678a5d49b6da80ee2a558f4cb08661c2d7a33 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Thu, 2 Sep 2021 14:04:43 +0300
-Subject: [PATCH 011/164] tools: Support building Wayland protocol source
+Subject: [PATCH 011/165] tools: Support building Wayland protocol source
  files.
 
 Wayland protocol descriptions are distributed as source XML files that
@@ -20,7 +20,7 @@ Signed-off-by: Alexandros Frantzis <alexandros.frantzis@collabora.com>
  3 files changed, 138 insertions(+), 5 deletions(-)
 
 diff --git a/configure b/configure
-index 9d179abf226..1bb8232df7c 100755
+index cf897865d26..e3d6266dd88 100755
 --- a/configure
 +++ b/configure
 @@ -701,6 +701,10 @@ DBUS_CFLAGS
@@ -34,7 +34,7 @@ index 9d179abf226..1bb8232df7c 100755
  WAYLAND_CLIENT_LIBS
  WAYLAND_CLIENT_CFLAGS
  X_EXTRA_LIBS
-@@ -1704,6 +1708,8 @@ XMKMF
+@@ -1703,6 +1707,8 @@ XMKMF
  CPP
  WAYLAND_CLIENT_CFLAGS
  WAYLAND_CLIENT_LIBS
@@ -43,7 +43,7 @@ index 9d179abf226..1bb8232df7c 100755
  INOTIFY_CFLAGS
  INOTIFY_LIBS
  DBUS_CFLAGS
-@@ -2505,6 +2511,10 @@ Some influential environment variables:
+@@ -2504,6 +2510,10 @@ Some influential environment variables:
                C compiler flags for wayland-client, overriding pkg-config
    WAYLAND_CLIENT_LIBS
                Linker flags for wayland-client, overriding pkg-config
@@ -54,7 +54,7 @@ index 9d179abf226..1bb8232df7c 100755
    INOTIFY_CFLAGS
                C compiler flags for libinotify, overriding pkg-config
    INOTIFY_LIBS
-@@ -15779,13 +15789,86 @@ fi
+@@ -15836,13 +15846,86 @@ fi
  
  CPPFLAGS=$ac_save_CPPFLAGS
  
@@ -144,7 +144,7 @@ index 9d179abf226..1bb8232df7c 100755
  This is an error since --with-wayland was requested." "$LINENO" 5 ;;
  esac
  enable_winewayland_drv=${enable_winewayland_drv:-no}
-@@ -23242,6 +23325,10 @@ X_LIBS = $X_LIBS
+@@ -23363,6 +23446,10 @@ X_LIBS = $X_LIBS
  X_EXTRA_LIBS = $X_EXTRA_LIBS
  WAYLAND_CLIENT_CFLAGS = $WAYLAND_CLIENT_CFLAGS
  WAYLAND_CLIENT_LIBS = $WAYLAND_CLIENT_LIBS
@@ -156,10 +156,10 @@ index 9d179abf226..1bb8232df7c 100755
  INOTIFY_CFLAGS = $INOTIFY_CFLAGS
  INOTIFY_LIBS = $INOTIFY_LIBS
 diff --git a/configure.ac b/configure.ac
-index 0849522cb9b..2f621d2b5aa 100644
+index 2e5c9f08d46..88dd2f4233f 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -1366,9 +1366,16 @@ then
+@@ -1367,9 +1367,16 @@ then
          [AC_CHECK_HEADERS([wayland-client.h])
           AC_CHECK_LIB(wayland-client,wl_display_connect,[:],
                        [WAYLAND_CLIENT_LIBS=""],[$WAYLAND_CLIENT_LIBS])])

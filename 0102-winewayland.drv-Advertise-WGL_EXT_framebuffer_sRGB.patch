@@ -1,7 +1,7 @@
-From 53adef2621d9e53d48aab83e596919d674123528 Mon Sep 17 00:00:00 2001
+From e63f376bd01dc7e138ee4b2dc282585c3d361dfb Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Wed, 29 Sep 2021 18:38:22 +0300
-Subject: [PATCH 102/164] winewayland.drv: Advertise WGL_EXT_framebuffer_sRGB.
+Subject: [PATCH 102/165] winewayland.drv: Advertise WGL_EXT_framebuffer_sRGB.
 
 If our EGL version supports GL colorspaces, advertise WGL_EXT_framebuffer_sRGB
 and create EGL window surfaces with an sRGB colorspace.

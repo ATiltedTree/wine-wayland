@@ -1,7 +1,7 @@
-From d41dd86a1d33da3f75274eb0f20d9ff527f6a818 Mon Sep 17 00:00:00 2001
+From 0e73f5315b4158aa8ff2ec234c298fa7adea46ba Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Wed, 22 Sep 2021 12:35:18 +0300
-Subject: [PATCH 141/164] winewayland.drv: Create dedicated window to handle
+Subject: [PATCH 141/165] winewayland.drv: Create dedicated window to handle
  clipboard messages.
 
 Signed-off-by: Alexandros Frantzis <alexandros.frantzis@collabora.com>

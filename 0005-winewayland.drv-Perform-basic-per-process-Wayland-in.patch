@@ -1,7 +1,7 @@
-From 056f65c419c854facff7144fd5298ede500e8bfb Mon Sep 17 00:00:00 2001
+From b52e2fd3d5d85121591e05b9c69f3ff75e7745ef Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Tue, 31 Aug 2021 16:21:21 +0300
-Subject: [PATCH 005/164] winewayland.drv: Perform basic per-process Wayland
+Subject: [PATCH 005/165] winewayland.drv: Perform basic per-process Wayland
  initialization.
 
 Try to connect to the Wayland compositor, and fail driver initialization
@@ -20,7 +20,7 @@ Signed-off-by: Alexandros Frantzis <alexandros.frantzis@collabora.com>
  create mode 100644 dlls/winewayland.drv/wayland.c
 
 diff --git a/configure b/configure
-index 204c82934ac..9d179abf226 100755
+index c51a694f68e..cf897865d26 100755
 --- a/configure
 +++ b/configure
 @@ -701,6 +701,8 @@ DBUS_CFLAGS
@@ -32,7 +32,7 @@ index 204c82934ac..9d179abf226 100755
  X_EXTRA_LIBS
  X_LIBS
  X_PRE_LIBS
-@@ -1700,6 +1702,8 @@ ZLIB_PE_CFLAGS
+@@ -1699,6 +1701,8 @@ ZLIB_PE_CFLAGS
  ZLIB_PE_LIBS
  XMKMF
  CPP
@@ -41,7 +41,7 @@ index 204c82934ac..9d179abf226 100755
  INOTIFY_CFLAGS
  INOTIFY_LIBS
  DBUS_CFLAGS
-@@ -2497,6 +2501,10 @@ Some influential environment variables:
+@@ -2496,6 +2500,10 @@ Some influential environment variables:
                Linker flags for the PE zlib, overriding the bundled version
    XMKMF       Path to xmkmf, Makefile generator for X Window System
    CPP         C preprocessor
@@ -52,7 +52,7 @@ index 204c82934ac..9d179abf226 100755
    INOTIFY_CFLAGS
                C compiler flags for libinotify, overriding pkg-config
    INOTIFY_LIBS
-@@ -15697,7 +15705,82 @@ enable_winex11_drv=${enable_winex11_drv:-no}
+@@ -15754,7 +15762,82 @@ enable_winex11_drv=${enable_winex11_drv:-no}
  fi
  fi
  
@@ -136,7 +136,7 @@ index 204c82934ac..9d179abf226 100755
  then :
    case "x$with_wayland" in
    x)   as_fn_append wine_notices "|Wayland ${notice_platform}development files not found, the Wayland driver won't be supported." ;;
-@@ -23157,6 +23240,8 @@ X_CFLAGS = $X_CFLAGS
+@@ -23278,6 +23361,8 @@ X_CFLAGS = $X_CFLAGS
  X_PRE_LIBS = $X_PRE_LIBS
  X_LIBS = $X_LIBS
  X_EXTRA_LIBS = $X_EXTRA_LIBS
@@ -146,10 +146,10 @@ index 204c82934ac..9d179abf226 100755
  INOTIFY_CFLAGS = $INOTIFY_CFLAGS
  INOTIFY_LIBS = $INOTIFY_LIBS
 diff --git a/configure.ac b/configure.ac
-index 4509f096573..0849522cb9b 100644
+index 69d5d630ce0..2e5c9f08d46 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -1360,7 +1360,14 @@ else
+@@ -1361,7 +1361,14 @@ else
                       [enable_winex11_drv])
  fi
  
@@ -269,10 +269,10 @@ index 92ef39777bd..607a5770e0f 100644
  }
  
 diff --git a/include/config.h.in b/include/config.h.in
-index 45a0bd07abb..719c32e0668 100644
+index de1bf6c61eb..e06f2b26cbe 100644
 --- a/include/config.h.in
 +++ b/include/config.h.in
-@@ -685,6 +685,9 @@
+@@ -700,6 +700,9 @@
  /* Define to 1 if you have the <valgrind/valgrind.h> header file. */
  #undef HAVE_VALGRIND_VALGRIND_H
  

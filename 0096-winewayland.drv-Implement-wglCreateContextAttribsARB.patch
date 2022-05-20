@@ -1,7 +1,7 @@
-From ecef13731e06723efd7a93137f08adb1b0c4e78c Mon Sep 17 00:00:00 2001
+From 48db8181d7e6393e8e02bf3d8e4fd63b94f3f079 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Tue, 14 Sep 2021 14:56:36 +0300
-Subject: [PATCH 096/164] winewayland.drv: Implement
+Subject: [PATCH 096/165] winewayland.drv: Implement
  wglCreateContextAttribsARB.
 
 Signed-off-by: Alexandros Frantzis <alexandros.frantzis@collabora.com>

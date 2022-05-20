@@ -1,7 +1,7 @@
-From 77e50f3cc55624005b496d6a92400a6c5ceff648 Mon Sep 17 00:00:00 2001
+From 9a1d31e74c0c2acbee3a449aec38aa470f730631 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Tue, 9 Nov 2021 18:58:22 +0200
-Subject: [PATCH 013/164] winewayland.drv: Add stub for driver window messages.
+Subject: [PATCH 013/165] winewayland.drv: Add stub for driver window messages.
 
 Signed-off-by: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 ---

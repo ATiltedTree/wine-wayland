@@ -1,7 +1,7 @@
-From a76d381ad1f8a6debc07b36f84cf5d40c8c05a58 Mon Sep 17 00:00:00 2001
+From de0b4314c359a69b8a758f4b64f3c423e6de7541 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Tue, 31 Aug 2021 15:48:36 +0300
-Subject: [PATCH 003/164] winewayland.drv: Add initial driver stub.
+Subject: [PATCH 003/165] winewayland.drv: Add initial driver stub.
 
 Add the initial driver stub for the Wayland driver and enable building
 it with the '--with-wayland' configure flag.
@@ -23,7 +23,7 @@ Signed-off-by: Alexandros Frantzis <alexandros.frantzis@collabora.com>
  create mode 100644 dlls/winewayland.drv/winewayland.drv.spec
 
 diff --git a/configure b/configure
-index f507d5fe6f0..204c82934ac 100755
+index 04f4515d4d8..c51a694f68e 100755
 --- a/configure
 +++ b/configure
 @@ -924,6 +924,7 @@ with_xrender
@@ -42,7 +42,7 @@ index f507d5fe6f0..204c82934ac 100755
  enable_winex11_drv
  enable_winexinput_sys
  enable_wing32
-@@ -2424,6 +2426,7 @@ Optional Packages:
+@@ -2423,6 +2425,7 @@ Optional Packages:
    --without-xshape        do not use the Xshape extension
    --without-xshm          do not use XShm (shared memory extension)
    --without-xxf86vm       do not use XFree video mode extension
@@ -50,7 +50,7 @@ index f507d5fe6f0..204c82934ac 100755
    --with-system-dllpath=PATH
                            load external PE dependencies from colon-separated
                            path PATH
-@@ -4445,6 +4448,13 @@ then :
+@@ -4444,6 +4447,13 @@ then :
  fi
  
  
@@ -64,7 +64,7 @@ index f507d5fe6f0..204c82934ac 100755
  
  # Check whether --with-system-dllpath was given.
  if test ${with_system_dllpath+y}
-@@ -15687,6 +15697,17 @@ enable_winex11_drv=${enable_winex11_drv:-no}
+@@ -15744,6 +15754,17 @@ enable_winex11_drv=${enable_winex11_drv:-no}
  fi
  fi
  
@@ -82,7 +82,7 @@ index f507d5fe6f0..204c82934ac 100755
  if test "$ac_cv_header_CL_cl_h" = "yes"
  then
      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for clGetPlatformInfo in -lOpenCL" >&5
-@@ -21873,6 +21894,7 @@ wine_fn_config_makefile dlls/wineps16.drv16 enable_win16
+@@ -21996,6 +22017,7 @@ wine_fn_config_makefile dlls/wineps16.drv16 enable_win16
  wine_fn_config_makefile dlls/winepulse.drv enable_winepulse_drv
  wine_fn_config_makefile dlls/wineusb.sys enable_wineusb_sys
  wine_fn_config_makefile dlls/winevulkan enable_winevulkan
@@ -91,7 +91,7 @@ index f507d5fe6f0..204c82934ac 100755
  wine_fn_config_makefile dlls/winexinput.sys enable_winexinput_sys
  wine_fn_config_makefile dlls/wing.dll16 enable_win16
 diff --git a/configure.ac b/configure.ac
-index a405bf1773f..4509f096573 100644
+index fbdfbb05b3b..69d5d630ce0 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -86,6 +86,7 @@ AC_ARG_WITH(xshm,      AS_HELP_STRING([--without-xshm],[do not use XShm (shared
@@ -102,7 +102,7 @@ index a405bf1773f..4509f096573 100644
  
  AC_ARG_WITH(system-dllpath,AS_HELP_STRING([--with-system-dllpath=PATH],[load external PE dependencies from colon-separated path PATH]),
              AC_SUBST(system_dllpath,[$withval]))
-@@ -1359,6 +1360,10 @@ else
+@@ -1360,6 +1361,10 @@ else
                       [enable_winex11_drv])
  fi
  
@@ -113,7 +113,7 @@ index a405bf1773f..4509f096573 100644
  dnl **** Check for OpenCL ****
  if test "$ac_cv_header_CL_cl_h" = "yes"
  then
-@@ -3119,6 +3124,7 @@ WINE_CONFIG_MAKEFILE(dlls/wineps16.drv16,enable_win16)
+@@ -3165,6 +3170,7 @@ WINE_CONFIG_MAKEFILE(dlls/wineps16.drv16,enable_win16)
  WINE_CONFIG_MAKEFILE(dlls/winepulse.drv)
  WINE_CONFIG_MAKEFILE(dlls/wineusb.sys)
  WINE_CONFIG_MAKEFILE(dlls/winevulkan)

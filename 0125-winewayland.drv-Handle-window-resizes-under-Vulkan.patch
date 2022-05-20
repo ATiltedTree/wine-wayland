@@ -1,7 +1,7 @@
-From bc83fa0e80e8c670560bb701345e6f509be6f5e7 Mon Sep 17 00:00:00 2001
+From de33793dba7ffca8112b383f4bfc0231c48b899b Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Fri, 17 Sep 2021 13:30:46 +0300
-Subject: [PATCH 125/164] winewayland.drv: Handle window resizes under Vulkan.
+Subject: [PATCH 125/165] winewayland.drv: Handle window resizes under Vulkan.
 
 Return the VK_ERROR_OUT_OF_DATE_KHR soft error to notify callers of
 vkQueuePresent that the image(s) they are presenting don't match the

@@ -1,7 +1,7 @@
-From 42aca3099fe84ef1f2b6c66c2e11ffce632fafc6 Mon Sep 17 00:00:00 2001
+From 1ab5fdbf60dafa09189901addb7b5a95cd465d00 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Wed, 23 Jun 2021 17:22:20 +0300
-Subject: [PATCH 002/164] win32u: Expose function to send internal thread
+Subject: [PATCH 002/165] win32u: Expose function to send internal thread
  messages.
 
 Expose a function to drivers so that they can send internal messages to
@@ -18,10 +18,10 @@ Signed-off-by: Alexandros Frantzis <alexandros.frantzis@collabora.com>
  6 files changed, 33 insertions(+)
 
 diff --git a/dlls/win32u/gdiobj.c b/dlls/win32u/gdiobj.c
-index f6790690188..4fa8d7ef317 100644
+index edb21456d8d..d3df08316b1 100644
 --- a/dlls/win32u/gdiobj.c
 +++ b/dlls/win32u/gdiobj.c
-@@ -1242,6 +1242,7 @@ static struct unix_funcs unix_funcs =
+@@ -1249,6 +1249,7 @@ static struct unix_funcs unix_funcs =
      __wine_get_vulkan_driver,
      __wine_get_wgl_driver,
      __wine_send_input,
@@ -30,7 +30,7 @@ index f6790690188..4fa8d7ef317 100644
  };
  
 diff --git a/dlls/win32u/message.c b/dlls/win32u/message.c
-index e67f9adcbe7..8391771024c 100644
+index 6bb9aa455f5..8750e505770 100644
 --- a/dlls/win32u/message.c
 +++ b/dlls/win32u/message.c
 @@ -2827,6 +2827,20 @@ static BOOL send_message_callback( HWND hwnd, UINT msg, WPARAM wparam, LPARAM lp
@@ -55,7 +55,7 @@ index e67f9adcbe7..8391771024c 100644
   *           NtUserPostMessage  (win32u.@)
   */
 diff --git a/dlls/win32u/win32u.spec b/dlls/win32u/win32u.spec
-index a915f89e578..c50a020ca78 100644
+index 48c10fd45d3..7440306069d 100644
 --- a/dlls/win32u/win32u.spec
 +++ b/dlls/win32u/win32u.spec
 @@ -1335,3 +1335,6 @@
@@ -66,10 +66,10 @@ index a915f89e578..c50a020ca78 100644
 +# message
 +@ cdecl __wine_send_internal_message_timeout(long long long long long long long ptr)
 diff --git a/dlls/win32u/win32u_private.h b/dlls/win32u/win32u_private.h
-index ea6d67750b4..86761246fa4 100644
+index 2d69cbef78e..a2050d436cd 100644
 --- a/dlls/win32u/win32u_private.h
 +++ b/dlls/win32u/win32u_private.h
-@@ -321,6 +321,9 @@ struct unix_funcs
+@@ -328,6 +328,9 @@ struct unix_funcs
      const struct vulkan_funcs * (CDECL *get_vulkan_driver)( UINT version );
      struct opengl_funcs * (CDECL *get_wgl_driver)( HDC hdc, UINT version );
      BOOL (CDECL *wine_send_input)( HWND hwnd, const INPUT *input, const RAWINPUT *rawinput );
@@ -80,10 +80,10 @@ index ea6d67750b4..86761246fa4 100644
  };
  
 diff --git a/dlls/win32u/wrappers.c b/dlls/win32u/wrappers.c
-index 6219b0fa49c..f82dc4f2efd 100644
+index 13b4b7164ab..0cb70302de7 100644
 --- a/dlls/win32u/wrappers.c
 +++ b/dlls/win32u/wrappers.c
-@@ -1366,6 +1366,15 @@ BOOL CDECL __wine_send_input( HWND hwnd, const INPUT *input, const RAWINPUT *raw
+@@ -1408,6 +1408,15 @@ BOOL CDECL __wine_send_input( HWND hwnd, const INPUT *input, const RAWINPUT *raw
      return unix_funcs->wine_send_input( hwnd, input, rawinput );
  }
  
@@ -100,7 +100,7 @@ index 6219b0fa49c..f82dc4f2efd 100644
   *           __wine_set_user_driver    (win32u.@)
   */
 diff --git a/include/winuser.h b/include/winuser.h
-index a227b912e0e..4ea4bf76ae8 100644
+index fd3ea879731..7169a156c29 100644
 --- a/include/winuser.h
 +++ b/include/winuser.h
 @@ -4404,6 +4404,9 @@ WORD        WINAPI SYSTEM_KillSystemTimer( WORD );

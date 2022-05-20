@@ -1,7 +1,7 @@
-From f903e85a0fd3f037cd42e0863c67336e803ea571 Mon Sep 17 00:00:00 2001
+From 5d782865e315f00564193d1712da358d11ac6358 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Mon, 6 Sep 2021 14:24:49 +0300
-Subject: [PATCH 051/164] winewayland.drv: Implement MapVirtualKeyEx.
+Subject: [PATCH 051/165] winewayland.drv: Implement MapVirtualKeyEx.
 
 Signed-off-by: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 ---

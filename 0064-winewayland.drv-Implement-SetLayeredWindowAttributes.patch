@@ -1,7 +1,7 @@
-From 963d2ea4c1126f19544fc8be87e3faf6a07d08a3 Mon Sep 17 00:00:00 2001
+From 11340113dc202c47ce3cfbe57f7c06bc749f3e03 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Thu, 9 Sep 2021 10:47:53 +0300
-Subject: [PATCH 064/164] winewayland.drv: Implement
+Subject: [PATCH 064/165] winewayland.drv: Implement
  SetLayeredWindowAttributes.
 
 Support color-keying and whole window opacity by manipulating the pixel

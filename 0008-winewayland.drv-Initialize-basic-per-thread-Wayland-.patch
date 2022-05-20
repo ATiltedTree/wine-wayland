@@ -1,7 +1,7 @@
-From d30aef5228013600508808c0bcc74c7421a03b64 Mon Sep 17 00:00:00 2001
+From 96db4358edafa8bb88956e480df08f5f8733b3c1 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Tue, 31 Aug 2021 16:53:51 +0300
-Subject: [PATCH 008/164] winewayland.drv: Initialize basic per-thread Wayland
+Subject: [PATCH 008/165] winewayland.drv: Initialize basic per-thread Wayland
  instance.
 
 Every thread that requires interaction with Wayland maintains its own

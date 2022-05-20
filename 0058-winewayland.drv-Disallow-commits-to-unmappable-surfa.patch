@@ -1,7 +1,7 @@
-From 50c915207cf32183e50f3b0e18ede70a25cfe923 Mon Sep 17 00:00:00 2001
+From 8c6a2e88a162489a8da213fa659530f83846ccdb Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Thu, 18 Nov 2021 14:33:51 +0200
-Subject: [PATCH 058/164] winewayland.drv: Disallow commits to unmappable
+Subject: [PATCH 058/165] winewayland.drv: Disallow commits to unmappable
  surfaces.
 
 Wayland surfaces without a role, which we use for hidden windows, are

@@ -1,7 +1,7 @@
-From edf2d85c41870887c0c5f1cf97cb6c521b65a871 Mon Sep 17 00:00:00 2001
+From 6594450803d27181087015bcbba543e477a1b920 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Wed, 22 Sep 2021 13:06:57 +0300
-Subject: [PATCH 145/164] winewayland.drv: Support RTF data device format.
+Subject: [PATCH 145/165] winewayland.drv: Support RTF data device format.
 
 Import and export RTF clipboard/drag-and-drop data.
 

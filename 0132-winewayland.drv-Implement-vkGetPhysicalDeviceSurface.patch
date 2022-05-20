@@ -1,7 +1,7 @@
-From 2360c0221cee740f2f5269207e34f3959a31280b Mon Sep 17 00:00:00 2001
+From 597c10c3301429c0737b6c6731fed224ea80a409 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Mon, 20 Sep 2021 12:27:03 +0300
-Subject: [PATCH 132/164] winewayland.drv: Implement
+Subject: [PATCH 132/165] winewayland.drv: Implement
  vkGetPhysicalDeviceSurfaceFormats(2)KHR.
 
 Passthrough implementations with two additions:

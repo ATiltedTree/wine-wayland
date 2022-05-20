@@ -1,7 +1,7 @@
-From 61781d16ba9658468c73e6b0a38fb8c8494229c0 Mon Sep 17 00:00:00 2001
+From 2bcadf39c1e0afaeb18bbbf90b8f1e679f35ea52 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Mon, 4 Oct 2021 17:04:04 +0300
-Subject: [PATCH 138/164] winewayland.drv: Invalidate Vulkan objects on Wayland
+Subject: [PATCH 138/165] winewayland.drv: Invalidate Vulkan objects on Wayland
  surface update.
 
 When the Wayland surface is updated (including when it changes to NULL,

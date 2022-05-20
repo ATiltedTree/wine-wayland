@@ -1,7 +1,7 @@
-From 2f31fbc485944ff72c4031457f578ea2c5666b13 Mon Sep 17 00:00:00 2001
+From 849efc384204671583f829a540a21584a1eb4d09 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Tue, 14 Sep 2021 14:57:55 +0300
-Subject: [PATCH 097/164] winewayland.drv: Implement wglShareLists.
+Subject: [PATCH 097/165] winewayland.drv: Implement wglShareLists.
 
 Sharing of display lists works differently in EGL and WGL. In case of
 EGL it is done at context creation time but in case of EGL it can also

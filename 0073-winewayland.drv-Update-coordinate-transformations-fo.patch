@@ -1,7 +1,7 @@
-From f8b475a036960065aa1a9a9f8e7b5d14eac36fa2 Mon Sep 17 00:00:00 2001
+From 3430f9166c9a0f2e685ea884029f082f6d7cb73e Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Mon, 13 Sep 2021 17:17:32 +0300
-Subject: [PATCH 073/164] winewayland.drv: Update coordinate transformations
+Subject: [PATCH 073/165] winewayland.drv: Update coordinate transformations
  for Wine display modes.
 
 Update coordinate transformation functions to handle the case where the

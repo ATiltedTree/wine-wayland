@@ -1,7 +1,7 @@
-From 016a6d6171de5e76c3b7f0e5cb973af59daf44d0 Mon Sep 17 00:00:00 2001
+From e483e75cc624f92b803d20a6bcddc688c76e626d Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Wed, 29 Sep 2021 14:17:56 +0300
-Subject: [PATCH 084/164] winewayland.drv: Add skeleton OpenGL driver.
+Subject: [PATCH 084/165] winewayland.drv: Add skeleton OpenGL driver.
 
 The driver opens the EGL and GL libraries and creates stubs for standard
 GL functions.
@@ -18,10 +18,10 @@ Signed-off-by: Alexandros Frantzis <alexandros.frantzis@collabora.com>
  create mode 100644 dlls/winewayland.drv/opengl.c
 
 diff --git a/configure b/configure
-index bb2679875b7..6168eb39243 100755
+index cf1f2e4d19c..d5eeae92af6 100755
 --- a/configure
 +++ b/configure
-@@ -16176,6 +16176,168 @@ fi
+@@ -16233,6 +16233,168 @@ fi
  
  CPPFLAGS=$ac_save_CPPFLAGS
  
@@ -191,10 +191,10 @@ index bb2679875b7..6168eb39243 100755
  if test -z "$WAYLAND_CLIENT_LIBS" ||
                             test -z "$WAYLAND_PROTOCOLS_DATADIR" ||
 diff --git a/configure.ac b/configure.ac
-index 1021c86bf9f..2532d0d99a2 100644
+index 064ce74de39..41fc7817961 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -1384,6 +1384,9 @@ then
+@@ -1385,6 +1385,9 @@ then
      WINE_PACKAGE_FLAGS(DRM,[libdrm],,,,
          [AC_CHECK_HEADERS([drm.h])
           AC_CHECK_LIB(drm,drmPrimeHandleToFD,[:],[DRM_LIBS=""],[$DRM_LIBS])])

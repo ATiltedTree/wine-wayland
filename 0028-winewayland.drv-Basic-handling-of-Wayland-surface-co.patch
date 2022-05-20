@@ -1,7 +1,7 @@
-From 8689ab1281500c7277e9392dfd422b83d95c987e Mon Sep 17 00:00:00 2001
+From d729d3784135af6b4f8b6406573340faa2e1a04d Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Tue, 28 Sep 2021 12:55:01 +0300
-Subject: [PATCH 028/164] winewayland.drv: Basic handling of Wayland surface
+Subject: [PATCH 028/165] winewayland.drv: Basic handling of Wayland surface
  configure events.
 
 Handle the initial configure event for top-level Wayland surfaces.  More

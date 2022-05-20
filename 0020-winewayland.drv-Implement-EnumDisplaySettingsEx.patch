@@ -1,7 +1,7 @@
-From a1fbd1d138fe4b8c741564e18eb067701dd97901 Mon Sep 17 00:00:00 2001
+From 6274cf36ce6e9f4fbe5e8a9bf824105f55666f8f Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Thu, 2 Sep 2021 15:34:01 +0300
-Subject: [PATCH 020/164] winewayland.drv: Implement EnumDisplaySettingsEx.
+Subject: [PATCH 020/165] winewayland.drv: Implement EnumDisplaySettingsEx.
 
 Implement EnumDisplaySettingsEx by using the Wayland display output
 information stored in the per-process instance.

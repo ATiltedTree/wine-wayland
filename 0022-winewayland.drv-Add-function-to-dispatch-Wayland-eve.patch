@@ -1,7 +1,7 @@
-From 5526472d9623450b5bee9475bc28a535c623408c Mon Sep 17 00:00:00 2001
+From abe7d93426d8466fe37ca7e9dd77eeea1b9ea06a Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Thu, 2 Sep 2021 17:11:53 +0300
-Subject: [PATCH 022/164] winewayland.drv: Add function to dispatch Wayland
+Subject: [PATCH 022/165] winewayland.drv: Add function to dispatch Wayland
  events.
 
 Introduce a mechanism to dispatch Wayland events from a queue,

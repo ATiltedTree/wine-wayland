@@ -1,7 +1,7 @@
-From 557374b9293cceab9114ea29d2d5b6f6222ff342 Mon Sep 17 00:00:00 2001
+From f5917d5c01e83309a9715f8a55c3bb2d7a4f5860 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Fri, 3 Sep 2021 14:37:22 +0300
-Subject: [PATCH 037/164] winewayland.drv: Read and queue Wayland events.
+Subject: [PATCH 037/165] winewayland.drv: Read and queue Wayland events.
 
 Create a separate reader thread to read Wayland events from the
 compositor, queue them to their appropriate queues and also dispatch
