@@ -1,4 +1,4 @@
-From e0c16c16d999d487f74d716655cbb281eac60876 Mon Sep 17 00:00:00 2001
+From d7d8201cbb41b535c1bc4db95d032919b21e72e2 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Mon, 6 Sep 2021 14:31:19 +0300
 Subject: [PATCH 052/165] winewayland.drv: Implement VkKeyScanEx.

@@ -1,4 +1,4 @@
-From c1382de119dc20364bad3601d5d6b8244b931cfc Mon Sep 17 00:00:00 2001
+From 4eaa758e538d240c76a611a5941f27eb8dfc6c7c Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Mon, 6 Sep 2021 13:57:33 +0300
 Subject: [PATCH 047/165] winewayland.drv: Add detection of best keyboard

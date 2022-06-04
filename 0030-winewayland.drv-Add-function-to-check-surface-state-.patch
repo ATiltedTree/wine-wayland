@@ -1,4 +1,4 @@
-From 5205b311d42d68dfddae4d23ad33c1e31ab957dc Mon Sep 17 00:00:00 2001
+From ff4804ed7cf47c9704de4caa5e58ef7f3db5039c Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Thu, 18 Nov 2021 10:15:43 +0200
 Subject: [PATCH 030/165] winewayland.drv: Add function to check surface state

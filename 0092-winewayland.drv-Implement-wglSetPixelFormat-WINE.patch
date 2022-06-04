@@ -1,4 +1,4 @@
-From a14320573ef363ba48a7ea0a9451ab92afca101c Mon Sep 17 00:00:00 2001
+From a4302dcd9f38202dbd8bc7c7792d1ab6ae69704e Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Tue, 14 Sep 2021 13:20:22 +0300
 Subject: [PATCH 092/165] winewayland.drv: Implement wglSetPixelFormat(WINE).

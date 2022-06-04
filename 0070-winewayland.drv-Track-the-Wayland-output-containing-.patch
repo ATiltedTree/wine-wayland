@@ -1,4 +1,4 @@
-From 4c7b36f276d170a5a174685c887643b039167a2b Mon Sep 17 00:00:00 2001
+From 8a0a8cb1d24c879f528a2c31aec21db9ea87d86a Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Tue, 26 Oct 2021 13:16:38 +0300
 Subject: [PATCH 070/165] winewayland.drv: Track the Wayland output containing

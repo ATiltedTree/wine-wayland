@@ -1,4 +1,4 @@
-From 06f3158fffaa4910d30de04763b698849de61897 Mon Sep 17 00:00:00 2001
+From d136d73200d11204d8d393b5fe29a06eaa25c395 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Tue, 9 Nov 2021 19:22:04 +0200
 Subject: [PATCH 015/165] winewayland.drv: Broadcast WM_DISPLAYCHANGE after

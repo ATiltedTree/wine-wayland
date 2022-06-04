@@ -1,4 +1,4 @@
-From 07080ac022548ba2a572084941f099ba279c5011 Mon Sep 17 00:00:00 2001
+From afd192ca11d47722d7db28226d0e6c2fe0187ad8 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Mon, 13 Sep 2021 17:18:46 +0300
 Subject: [PATCH 074/165] winewayland.drv: Scale surfaces to apply Wine display

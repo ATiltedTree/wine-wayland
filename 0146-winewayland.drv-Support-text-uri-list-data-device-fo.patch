@@ -1,4 +1,4 @@
-From 229eaa9ff6b6b21d122ad564422d5fff1ebc83df Mon Sep 17 00:00:00 2001
+From 2dfd4060d2c5bb63b9c1f55ea02a3f56986e67e8 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Wed, 22 Sep 2021 13:12:09 +0300
 Subject: [PATCH 146/165] winewayland.drv: Support text/uri-list data device

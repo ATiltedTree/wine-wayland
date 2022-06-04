@@ -1,4 +1,4 @@
-From 4f8edfbb1025ae2506e95db0484e83e2f325ead3 Mon Sep 17 00:00:00 2001
+From 61153348527932e15e80cbc539e6d2809bae7d08 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Fri, 26 Nov 2021 15:51:22 +0200
 Subject: [PATCH 034/165] winewayland.drv: Introduce function to clear a

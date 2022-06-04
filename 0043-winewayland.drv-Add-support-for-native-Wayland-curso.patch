@@ -1,4 +1,4 @@
-From 0a60a1cbcabb548d4330bf835153d058c241abbe Mon Sep 17 00:00:00 2001
+From c8bfd3db1699c3fc702bda5d9dad667c9dfc0790 Mon Sep 17 00:00:00 2001
 From: Leandro Ribeiro <leandro.ribeiro@collabora.com>
 Date: Tue, 8 Mar 2022 14:22:59 -0300
 Subject: [PATCH 043/165] winewayland.drv: Add support for native Wayland
@@ -25,7 +25,7 @@ Signed-off-by: Alexandros Frantzis <alexandros.frantzis@collabora.com>
  8 files changed, 431 insertions(+), 39 deletions(-)
 
 diff --git a/configure b/configure
-index e3d6266dd88..461f4213e85 100755
+index c9326525a33..7f5d3870edb 100755
 --- a/configure
 +++ b/configure
 @@ -701,6 +701,8 @@ DBUS_CFLAGS

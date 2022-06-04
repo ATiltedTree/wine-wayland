@@ -1,4 +1,4 @@
-From 5d7de96e07d4777ccc1d956912b60f8ab39364b4 Mon Sep 17 00:00:00 2001
+From 457db2001b7da1ff4508123632cc5ab066ab01ba Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Wed, 22 Sep 2021 13:27:47 +0300
 Subject: [PATCH 151/165] winewayland.drv: Handle Wayland data device selection

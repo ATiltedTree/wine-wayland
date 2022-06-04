@@ -1,4 +1,4 @@
-From 8fcec45cff296111baef3ffee06be2fd15b15ddf Mon Sep 17 00:00:00 2001
+From b7e9a7f6f875ccfb6c784d7b38111d6efbbb0cc3 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Wed, 29 Sep 2021 14:25:46 +0300
 Subject: [PATCH 085/165] winewayland.drv: Perform basic EGL initialization.

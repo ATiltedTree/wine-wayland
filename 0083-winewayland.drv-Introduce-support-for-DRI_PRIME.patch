@@ -1,4 +1,4 @@
-From 43920cd4bb753831086063664bd50c1fa38e0d56 Mon Sep 17 00:00:00 2001
+From c85abca7058f5297adbb74fc022cebe478ec38f9 Mon Sep 17 00:00:00 2001
 From: Leandro Ribeiro <leandro.ribeiro@collabora.com>
 Date: Wed, 4 May 2022 13:52:15 -0300
 Subject: [PATCH 083/165] winewayland.drv: Introduce support for DRI_PRIME.

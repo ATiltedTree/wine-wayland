@@ -1,4 +1,4 @@
-From e483e75cc624f92b803d20a6bcddc688c76e626d Mon Sep 17 00:00:00 2001
+From 8b492e8c09f6b39418725e4a4996f4865d0d7205 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Wed, 29 Sep 2021 14:17:56 +0300
 Subject: [PATCH 084/165] winewayland.drv: Add skeleton OpenGL driver.
@@ -18,7 +18,7 @@ Signed-off-by: Alexandros Frantzis <alexandros.frantzis@collabora.com>
  create mode 100644 dlls/winewayland.drv/opengl.c
 
 diff --git a/configure b/configure
-index cf1f2e4d19c..d5eeae92af6 100755
+index dfa20e8b722..de9fa073e03 100755
 --- a/configure
 +++ b/configure
 @@ -16233,6 +16233,168 @@ fi

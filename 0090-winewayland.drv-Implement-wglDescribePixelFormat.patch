@@ -1,4 +1,4 @@
-From b4daab6615b166e6533bd89531f154c43d4af70b Mon Sep 17 00:00:00 2001
+From 1529037d1bd76e48eceb3312e69fbe4c9974a634 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Tue, 14 Sep 2021 12:32:28 +0300
 Subject: [PATCH 090/165] winewayland.drv: Implement wglDescribePixelFormat.

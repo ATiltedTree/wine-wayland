@@ -1,4 +1,4 @@
-From fded1b21110f9a6f5f81e3a2de6d03687bc5267e Mon Sep 17 00:00:00 2001
+From e17cb24a1483777ae2cc6b55a5bf2cbc286e289e Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Wed, 9 Mar 2022 13:32:42 +0200
 Subject: [PATCH 053/165] winewayland.drv: Update Wine modifier state from

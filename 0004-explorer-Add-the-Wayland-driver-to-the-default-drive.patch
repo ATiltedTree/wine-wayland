@@ -1,4 +1,4 @@
-From c75bd5a20bc78f3ce27a493106b9efe43df0a8e6 Mon Sep 17 00:00:00 2001
+From 66211c08b738021b4fff47032aeb89ed398167a8 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Thu, 10 Dec 2020 18:41:03 +0200
 Subject: [PATCH 004/165] explorer: Add the Wayland driver to the default
@@ -16,10 +16,10 @@ Signed-off-by: Alexandros Frantzis <alexandros.frantzis@collabora.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/programs/explorer/desktop.c b/programs/explorer/desktop.c
-index 400cc1d560e..0c9475a6128 100644
+index 96673adc254..afa711a8dbf 100644
 --- a/programs/explorer/desktop.c
 +++ b/programs/explorer/desktop.c
-@@ -39,7 +39,7 @@ WINE_DEFAULT_DEBUG_CHANNEL(explorer);
+@@ -40,7 +40,7 @@ WINE_DEFAULT_DEBUG_CHANNEL(explorer);
  #define DESKTOP_CLASS_ATOM ((LPCWSTR)MAKEINTATOM(32769))
  #define DESKTOP_ALL_ACCESS 0x01ff
  

@@ -1,4 +1,4 @@
-From 4491dcaf470adec01326994da1a3d2a4d4e8223a Mon Sep 17 00:00:00 2001
+From 7ecf0e7b168737d5de7468d00140bf8f4a481b85 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Tue, 14 Sep 2021 15:25:18 +0300
 Subject: [PATCH 098/165] winewayland.drv: Add function to ensure a Wayland

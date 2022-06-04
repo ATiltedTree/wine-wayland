@@ -1,4 +1,4 @@
-From 47963df3188947c16c8dc10fd8b94234ca1a7490 Mon Sep 17 00:00:00 2001
+From 89a200c9fc5c335ca42b8a8b351fbc3be66341b9 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Fri, 10 Dec 2021 13:04:55 +0200
 Subject: [PATCH 163/165] winewayland.drv: Experimental support for systray.

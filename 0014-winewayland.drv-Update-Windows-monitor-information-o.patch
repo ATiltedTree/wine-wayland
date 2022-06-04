@@ -1,4 +1,4 @@
-From e8ba67c1dc5df043945f4fedc0fd7816efc24ec1 Mon Sep 17 00:00:00 2001
+From 063b1fb44f7bae9b2244b78f1cc0fd6daca621ed Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Thu, 2 Sep 2021 15:28:21 +0300
 Subject: [PATCH 014/165] winewayland.drv: Update Windows monitor information

@@ -1,4 +1,4 @@
-From 23c41f62e8103196e1e60ed268f383839032faf3 Mon Sep 17 00:00:00 2001
+From 00a3147754ea4b8e6a2ed0f45f0b832f4f714ee2 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Wed, 29 Sep 2021 13:47:29 +0300
 Subject: [PATCH 076/165] winewayland.drv: Implement ChangeDisplaySettingsEx.

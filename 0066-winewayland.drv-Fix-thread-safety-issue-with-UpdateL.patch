@@ -1,4 +1,4 @@
-From 88166c0a8c30421c1e14d53898d7edcce9c0799e Mon Sep 17 00:00:00 2001
+From 5726e0300d335aa77e0d69097a29b2d95bc6d882 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Fri, 10 Sep 2021 14:25:25 +0300
 Subject: [PATCH 066/165] winewayland.drv: Fix thread safety issue with

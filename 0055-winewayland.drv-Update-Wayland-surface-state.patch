@@ -1,4 +1,4 @@
-From 91d60e5b647cf96d4c74b73433c825300c4f1066 Mon Sep 17 00:00:00 2001
+From d1b90d29b5f3f123b2ed0c05ad392f5615f65d88 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Wed, 8 Sep 2021 12:01:12 +0300
 Subject: [PATCH 055/165] winewayland.drv: Update Wayland surface state.

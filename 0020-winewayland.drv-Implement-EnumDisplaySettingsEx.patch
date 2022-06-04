@@ -1,4 +1,4 @@
-From 6274cf36ce6e9f4fbe5e8a9bf824105f55666f8f Mon Sep 17 00:00:00 2001
+From eb9edd3196e29350049a12f96543509ded7b5504 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Thu, 2 Sep 2021 15:34:01 +0300
 Subject: [PATCH 020/165] winewayland.drv: Implement EnumDisplaySettingsEx.

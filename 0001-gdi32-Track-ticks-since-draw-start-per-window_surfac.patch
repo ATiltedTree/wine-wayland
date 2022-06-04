@@ -1,4 +1,4 @@
-From 77a6563ba9d28169bad4ee200656e02bb1a3219e Mon Sep 17 00:00:00 2001
+From 602e1515d52f1caad9fa3e146aa4485a9d021b59 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Thu, 10 Dec 2020 14:09:36 +0200
 Subject: [PATCH 001/165] gdi32: Track ticks since draw start per
@@ -64,7 +64,7 @@ index 7c60466d9ee..434b0cbf778 100644
  
  static void CDECL unlock_bits_surface( struct gdi_image_bits *bits )
 diff --git a/include/wine/gdi_driver.h b/include/wine/gdi_driver.h
-index 21fff4d4aa2..8d4e7994a4c 100644
+index 52fd6fe49d3..04f86d782ab 100644
 --- a/include/wine/gdi_driver.h
 +++ b/include/wine/gdi_driver.h
 @@ -217,6 +217,7 @@ struct window_surface

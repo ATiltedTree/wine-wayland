@@ -1,4 +1,4 @@
-From 4ca4ee5b2fe258841bb6eebfb59609aa73e3fd25 Mon Sep 17 00:00:00 2001
+From b224e1a15db1dcb7674044bdcd8723edb841126d Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Tue, 28 Sep 2021 11:05:17 +0300
 Subject: [PATCH 027/165] winewayland.drv: Introduce support for Wayland

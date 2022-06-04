@@ -1,4 +1,4 @@
-From 558ef076cc61875bf6257061a798a0dc81f40966 Mon Sep 17 00:00:00 2001
+From 3ba26848048eb9086b8872d9bc7fae36dc9fc656 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Wed, 22 Sep 2021 13:04:39 +0300
 Subject: [PATCH 144/165] winewayland.drv: Support text/plain data device

@@ -1,4 +1,4 @@
-From d0b2994005291e15a5fab0810c41d22d4ef2cb42 Mon Sep 17 00:00:00 2001
+From bff40a406ad4f6aa7e4028090a723e96f8819890 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Mon, 14 Mar 2022 14:56:03 +0200
 Subject: [PATCH 023/165] winewayland.drv: Introduce abstraction for native

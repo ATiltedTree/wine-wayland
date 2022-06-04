@@ -1,4 +1,4 @@
-From de0b4314c359a69b8a758f4b64f3c423e6de7541 Mon Sep 17 00:00:00 2001
+From 64bdf174b5dec6430dd7e98637656d0d7f68ebd5 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Tue, 31 Aug 2021 15:48:36 +0300
 Subject: [PATCH 003/165] winewayland.drv: Add initial driver stub.
@@ -23,7 +23,7 @@ Signed-off-by: Alexandros Frantzis <alexandros.frantzis@collabora.com>
  create mode 100644 dlls/winewayland.drv/winewayland.drv.spec
 
 diff --git a/configure b/configure
-index 04f4515d4d8..c51a694f68e 100755
+index faf7e0e1a8e..c224e214472 100755
 --- a/configure
 +++ b/configure
 @@ -924,6 +924,7 @@ with_xrender

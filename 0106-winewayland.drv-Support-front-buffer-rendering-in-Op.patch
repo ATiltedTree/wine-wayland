@@ -1,4 +1,4 @@
-From 367e84cce355cc09170ab736f6306073b97624d2 Mon Sep 17 00:00:00 2001
+From a40e109b87b1a396d0ebd6d7984cae76c3e5ca0a Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Tue, 14 Sep 2021 16:34:39 +0300
 Subject: [PATCH 106/165] winewayland.drv: Support front buffer rendering in

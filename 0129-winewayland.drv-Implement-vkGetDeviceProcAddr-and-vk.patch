@@ -1,4 +1,4 @@
-From 70e102e1ae9edb894c3ab059e4194162e2bd24b2 Mon Sep 17 00:00:00 2001
+From 0f419c214889554f523127984a50796fd621880b Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Mon, 20 Sep 2021 10:56:18 +0300
 Subject: [PATCH 129/165] winewayland.drv: Implement vkGetDeviceProcAddr and

@@ -1,4 +1,4 @@
-From de33793dba7ffca8112b383f4bfc0231c48b899b Mon Sep 17 00:00:00 2001
+From 52ef29e1f429d154a66efa968644d1292635e8f8 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Fri, 17 Sep 2021 13:30:46 +0300
 Subject: [PATCH 125/165] winewayland.drv: Handle window resizes under Vulkan.

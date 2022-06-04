@@ -1,4 +1,4 @@
-From 8b668a7fe477adee05b0e326e834ac6d6c69d173 Mon Sep 17 00:00:00 2001
+From 17cde047f08d37f594b49036e5596a028a2384d9 Mon Sep 17 00:00:00 2001
 From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
 Date: Mon, 6 Sep 2021 14:00:11 +0300
 Subject: [PATCH 048/165] winewayland.drv: Add support for more keyboard
